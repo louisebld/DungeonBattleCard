@@ -5,7 +5,6 @@ import styles from './GameGrid.module.css';
 export default class GameGridV2 extends React.Component {
     
     handleClick = (event) => {
-        event.currentTarget.disabled = true;
         console.log("le base du joueur se trouve en colonne : " + event);
         for(var i = 1; i <= 3; i++){
             if(i !== event){

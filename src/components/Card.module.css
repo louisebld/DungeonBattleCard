@@ -13,11 +13,10 @@
     transition: 0.2s;
 }
 
-.card:hover{
-    /* increase the with of the full div */
+/* .card:hover{
     width: 90px;
     height: 110px;
-}
+} */
 
 .name_card{
     font-size: 1.1rem;

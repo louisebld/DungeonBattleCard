@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styles from './GameScreen.module.css';
 import GameGrid from '../components/GameGrid'
 import Card from '../components/Card'
 import Deck from '../components/Deck'
@@ -35,7 +36,7 @@ export default class GameScreen extends Component {
 
 render() {
     return(
-		<div className="main">
+		<div className={styles.main}>
 			<DeckAdversaire/>
 			<GameGrid/>
 			<Deck value={generateDeck()}/>

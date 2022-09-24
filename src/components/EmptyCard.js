@@ -1,10 +1,11 @@
 import React from 'react';
+import styles from './Card.module.css';
 
 export default class EmptyCard extends React.Component {
 
     render() {
         return (
-        <div style={view}>
+        <div className={styles.card}>
         </div>
         );
     }

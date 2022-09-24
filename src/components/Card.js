@@ -1,4 +1,6 @@
 import React from 'react';
+import styles from './Card.module.css';
+import super_kitty from '../assets/png/super_kitty.png';
 
 export default class Card extends React.Component {
 
@@ -6,54 +8,19 @@ export default class Card extends React.Component {
         // console.log(this.props)
         // console.log(this.props.img)
         return (
-        <div style={view}>
-
-            {this.props.name}
-            <div style={pv}>{this.props.pv}</div>
-            {/* require('../assets/card/plant.png') */}
-            {/* require('' + this.props.img) */}
-            {/* <Image style={styles.img} source={require('../assets/card/plant.png')}/> */}
-
-            <div style={attack}>{this.props.attack}</div>
+            <div className={styles.card}>
+                {/* <img src={this.props.img} style={img}/>  */}
+                <img src={super_kitty} className={styles.img_card} alt="Super Chat"/>
+                <p className={styles.name_card}>{this.props.name}</p>
+                <div className={styles.infos_card}>
+                    <p className={styles.pv_card}>{this.props.pv}</p>
+                    <p className={styles.force_card}>{this.props.attack}</p>
+                </div>
+            </div>
             
-        </div>
         );
     }
 }
 
-    const view = {
-        width: 60,
-        height: 80,
-        margin:5,
-        backgroundColor: "#4B4E6D",
-        borderRadius: 10,
-    };
-    const pv = {
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        backgroundColor: 'red',
-        color: 'white',
-        width: '10px',
-        height: '20%',
-        borderRadius: 10,
-    };
 
-    const attack = {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        backgroundColor: 'blue',
-        color: 'white',
-        width: '10px',
-        height: '20%',
-        borderRadius: 10,
-    };
-    const img = {
-        position: 'absolute',
-        width: 30,
-        height: 30,
-        top: '50%',
-        left: '50%',
-        
-    };
+

@@ -11,6 +11,7 @@ export default class GameGridV2 extends React.Component {
                 var button = document.querySelector("#btn_" + i);
                 button.style.display = "none";
             }
+            document.querySelector("#btn_" + event).classList.add(styles.disabled);
         }
 
     }

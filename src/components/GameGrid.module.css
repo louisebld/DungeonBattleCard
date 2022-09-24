@@ -32,3 +32,8 @@
 .button_heart:hover{
     background-color: #FFE3E1;
 }
+
+.disabled{
+    cursor: not-allowed;
+    pointer-events: none;
+}

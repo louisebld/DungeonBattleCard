@@ -1,16 +1,20 @@
+const cyclop = '../assets/png/cyclop.png';
+const troll = '../assets/png/troll.png';
+const goblin = '../assets/png/goblin.png';
+
+
 function generateCard(){
     var possiblenames = ["coco", "rico", "pépito", "patate", "cricri"]
-    var possiblesimg = ["monster1.png", "monster2.png", "plant.png", "plant2.png", "plant3.png"]
+    var img = [cyclop, troll, goblin]
     var pv = Math.floor(Math.random() * 10) + 1;
     var attack = Math.floor(Math.random() * 10) + 1;
     var name = possiblenames[Math.floor(Math.random() * possiblenames.length)];
-    var img = '../assets/card/' + possiblesimg[Math.floor(Math.random() * possiblesimg.length)];
 
     var card = {
         name: name,
         pv: pv,
         attack: attack,
-        img: '../assets/card/plant.png'
+        img: img[Math.floor(Math.random() * img.length)]
     }
     return card;
 }

@@ -4,7 +4,7 @@ import styles from './GameGrid.module.css';
 
 export default class GameGridV2 extends React.Component {
     
-    handleClick = (event) => {
+    handleClickSelectBase = (event) => {
         console.log("le base du joueur se trouve en colonne : " + event);
         for(var i = 1; i <= 3; i++){
             if(i !== event){
@@ -13,9 +13,8 @@ export default class GameGridV2 extends React.Component {
             }
             document.querySelector("#btn_" + event).classList.add(styles.disabled);
         }
-
     }
-    
+
     render() {
         return (
             <div className={styles.container}>
@@ -24,21 +23,21 @@ export default class GameGridV2 extends React.Component {
                     <EmptyCard/>
                     <EmptyCard/>
                     <EmptyCard/>
-                    <button id="btn_1" className={styles.button_heart} onClick={() => {this.handleClick(1)}}>💗</button>
+                    <button id="btn_1" className={styles.button_heart} onClick={() => {this.handleClickSelectBase(1)}}>💗</button>
                 </div>
                 <div className={styles.column}>
                     <EmptyCard/>
                     <EmptyCard/>
                     <EmptyCard/>
                     <EmptyCard/>    
-                    <button id="btn_2" className={styles.button_heart} onClick={() => {this.handleClick(2)}}>💗</button>
+                    <button id="btn_2" className={styles.button_heart} onClick={() => {this.handleClickSelectBase(2)}}>💗</button>
                 </div>
                 <div className={styles.column}>
                     <EmptyCard/>
                     <EmptyCard/>
                     <EmptyCard/>
                     <EmptyCard/>
-                    <button id="btn_3" className={styles.button_heart} onClick={() => {this.handleClick(3)}}>💗</button>
+                    <button id="btn_3" className={styles.button_heart} onClick={() => {this.handleClickSelectBase(3)}}>💗</button>
                 </div>
             </div>
         )

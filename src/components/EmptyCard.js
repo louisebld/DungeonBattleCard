@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Card.module.css';
+import styles from './Emptycard.module.css';
 
 export default class EmptyCard extends React.Component {
 
@@ -9,12 +9,4 @@ export default class EmptyCard extends React.Component {
         </div>
         );
     }
-}
-
-const view = {
-    width: 60,
-    height: 80,
-    margin:5,
-    backgroundColor: "#4B4E6D",
-    borderRadius: 10,
 }

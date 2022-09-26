@@ -1,6 +1,6 @@
 import React from 'react';
 import EmptyCard from './EmptyCard';
-import styles from './GameGrid.module.css';
+import styles from '../css/GameGrid.module.css';
 
 export default class GameGridV2 extends React.Component {
     

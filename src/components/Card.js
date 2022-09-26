@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Card.module.css';
+import styles from '../css/Card.module.css';
 import troll from '../assets/png/troll.png';
 
 export default class Card extends React.Component {

@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Emptycard.module.css';
+import styles from '../css/Emptycard.module.css';
 
 export default class EmptyCard extends React.Component {
 

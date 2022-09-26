@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from './Card';
-import styles from './Deck.module.css';
+import styles from '../css/Deck.module.css';
 
 import generateCard from '../functions/generateCard';
 
@@ -17,7 +17,6 @@ export default class Deck extends React.Component {
         let deck = this.state.deck;
         deck.splice(index, 1);
         this.setState({deck: deck});
-        
         this.state.deck.push(generateCard());
     }
     render() {

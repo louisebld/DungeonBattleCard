@@ -1,6 +1,5 @@
 import React from 'react';
-import Card from './Card';
-import styles from './DeckAdversaire.module.css';
+import styles from '../css/DeckAdversaire.module.css';
 import EmptyCard from './EmptyCard';
 
 export default class DeckAdversaire extends React.Component {

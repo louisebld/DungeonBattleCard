@@ -17,7 +17,7 @@ export default class Deck extends React.Component {
         let deck = this.state.deck;
         deck.splice(index, 1);
         this.setState({deck: deck});
-        this.state.deck.push(generateCard());
+        this.state.deck.splice(index, 0, generateCard());
     }
     render() {
         return (

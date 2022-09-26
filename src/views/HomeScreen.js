@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from "react-router-dom";
 import styles from '../css/HomeScreen.module.css';
+import generateCard from '../functions/generateCard';
 
 import logo from '../assets/png/dungeon.png';
 
@@ -25,6 +26,8 @@ render() {
                             Règles
                         </button>
                     </Link>
+                    <button onClick={() => {console.log(generateCard())}}>GET</button>
+
                 </div>
             </div>
 		</div>

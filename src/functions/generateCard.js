@@ -1,3 +1,8 @@
+import { db } from '../firebase.js';
+import { collection, getDocs } from "firebase/firestore";
+
+
+
 const cyclop = '../assets/png/cyclop.png';
 const troll = '../assets/png/troll.png';
 const goblin = '../assets/png/goblin.png';
@@ -18,5 +23,32 @@ function generateCard(){
     }
     return card;
 }
+
+// async function generateCard(){
+//     var cards = [];
+//     var card = {};
+//     const querySnapshot = await getDocs(collection(db, "cards"));
+//     querySnapshot.forEach((doc) => {
+//         cards.push(doc.data());
+//         });
+//     // console.log(cards);
+//     console.log(cards);
+//     var random = Math.floor(Math.random() * cards.length);
+//         var card = {
+//         name: cards[random].name,
+//         pv: cards[random].pv,
+//         attack: cards[random].attack,
+//         img: cards[random].img,
+//     }
+//     return card;
+// }
+
+// function generateCard3(){
+//     generateCard().then((card) => {
+//             return card;
+
+//     })
+// }
+
 
 export default generateCard;

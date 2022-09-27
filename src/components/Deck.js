@@ -9,9 +9,17 @@ export default class Deck extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            deck: this.props.value
+            deck: this.props.value,
+            cardSelected : this.props.cardSelected,
         }
     }
+
+    sendCardSelected(nb){
+        this.props.fromChildCard(nb);
+      };
+
+
+
     // remove card from the deck with his index
     removeCardFromDeck(index) {
         let deck = this.state.deck;
@@ -19,11 +27,17 @@ export default class Deck extends React.Component {
         this.setState({deck: deck});
         this.state.deck.splice(index, 0, generateCard());
     }
+
+    cardSelected(index){
+        this.setState({cardSelected: this.state.deck[index]});
+        this.sendCardSelected(this.state.deck[index]);
+    }
+
     render() {
         return (
             <div className={styles.container} onClick={() => console.log(this.state.deck)}>
                 {this.props.value.map((card, index) => {
-                    return <div onClick={() => this.removeCardFromDeck(index)}><Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img}/></div>
+                    return <div onClick={() => this.cardSelected(index)}><Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img}/></div>
                 })}
             </div>
         );

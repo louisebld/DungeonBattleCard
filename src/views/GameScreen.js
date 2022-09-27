@@ -69,6 +69,13 @@ function generateDeck2(){
     }
 }
 
+function removeCardFromDeck(index) {
+    let deck = this.state.deck;
+    deck.splice(index, 1);
+    this.setState({deck: deck});
+    this.state.deck.splice(index, 0, generateCard());
+}
+
 export default class GameScreen extends Component {
     constructor(props) {
         super(props);
@@ -77,31 +84,25 @@ export default class GameScreen extends Component {
             deck: generateDeck(),
             plateau: createEmptyPlateau(),
             cards: [],
+            cardSelected: null,
         };
       }
       handleCallback = (childData) => {
-        this.setState({ heart: childData });
+        this.setState({ heart: childData});
+        this.setState({ cardSelected: childData});
     };
 
-    async componentDidMount(){
-        var cards = [];
-        const querySnapshot = await getDocs(collection(db, "cards"));
-        querySnapshot.forEach((doc) => {
-            cards.push(doc.data());
-            });
-        this.setState({cards: cards});
-    
-    }
 
 render() {
     return(
 		<div className={styles.main}>
 			<DeckAdversaire/>
-			<GameGrid value={this.state.plateau} fromChild={this.handleCallback}/>
-			<Deck value={this.state.deck}/>
-            {/* button */}
-            <button onClick={() => {console.log(getCard("1"))}}>heart</button>
-            {/* <Card name="card" value={getCardFromDB2(1)}/> */}
+			<GameGrid value={this.state.plateau} cardSelected={this.state.cardSelected} fromChild={this.handleCallback}/>
+            <button type="button">Fin du tour</button>
+
+            <Deck value={this.state.deck} fromChildCard={this.handleCallback}/>
+            {/* <button onClick={() => {console.log(this.state.cardSelected)}}>heart</button> */}
+
 		</div>
 	)
 }

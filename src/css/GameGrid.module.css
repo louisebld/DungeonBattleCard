@@ -1,12 +1,12 @@
 .container{
-    background-color: #BFACE0;
+    background-color: #82A3A1;
     height: auto;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     border-radius: 1rem;
-    padding: 1rem;
+    padding: 0.5rem;
 }
 
 .column{
@@ -23,11 +23,11 @@
     margin-top: 0.4rem;
     padding: 6px 10px 6px 10px;
     border: none;
-    background-color: #FFF5E4;
+    background-color: #465362;
     cursor: pointer;
     border-radius: 5px;
-    transition: 0.3s;
-}
+    transition: 0.3s;}
+
 
 .button_heart:hover{
     background-color: #FFE3E1;

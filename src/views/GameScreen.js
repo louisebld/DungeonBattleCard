@@ -10,13 +10,18 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from '../firebase.js';
 import { getFirestore } from 'firebase/firestore/lite'
 import { collection, getDocs } from "firebase/firestore";
+import Card from './Card';
+// const [win, setWin] = useState(false);
+
 
 
 async function getCardFromDB(){
     const querySnapshot = await getDocs(collection(db, "cards"));
     querySnapshot.forEach((doc) => {
         console.log(doc.id, " => ", doc.data());
-        });
+        console.log(doc.data().name);
+        // <Card name={doc.data().name} pv={doc.data().pv} attack={doc.data().attack} img={doc.data().img}/>
+    });
 }
 
 async function getCardFromDB2(id){
@@ -139,6 +144,7 @@ render() {
 
             <Deck value={this.state.deck} fromChildCard={this.handleCallback}/>
             <button onClick={() => {this.computerPlaceCard()}}>heart</button>
+            <button onClick={() => {getCardFromDB()}}>BDD</button>
 
 		</div>
 	)

@@ -31,9 +31,9 @@ export default class GameGridV2 extends React.Component {
         }
         
 
-
+        
         document.querySelector("#btn_" + event).classList.add(styles.disabled);
-        // document.querySelector("base-title").classList.add(styles.disabled);
+        document.querySelector("#base_title").classList.add(styles.undisplay);
         // var div = document.querySelector("placeheart");
         // on cache placeheart
         // div.style.display = "none";        

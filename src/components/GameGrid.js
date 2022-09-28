@@ -23,12 +23,16 @@ export default class GameGridV2 extends React.Component {
     handleClickSelectBase (event){
         console.log("le base du joueur se trouve en colonne : " + event);
         for(var i = 1; i <=3; i++){
-            event !== i ? document.getElementById("#div_" + i).classList.add(styles.display) : console.log("hey");
+            if(i != event){
+                var btn = document.getElementById("btn_" + i);
+                console.log(btn);
+                btn.style.visibility = "hidden";
+            }
         }
         
 
 
-        // document.querySelector("#btn_" + event).classList.add(styles.disabled);
+        document.querySelector("#btn_" + event).classList.add(styles.disabled);
         // document.querySelector("base-title").classList.add(styles.disabled);
         // var div = document.querySelector("placeheart");
         // on cache placeheart

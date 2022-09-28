@@ -37,17 +37,16 @@ export default class GameGridV2 extends React.Component {
     }
 
     pushCardPlateau = (index) => {
-
         if(this.props.cardSelected !== null){
             if (this.state.heart != 0){
             let plateau = this.state.plateau;
-            console.log(this.state.cardSelected);
-            let card = this.props.cardSelected;
-            console.log(index)
-            
+            let card = this.props.cardSelected;            
             plateau[index][3] = card;
             this.setState({plateau: plateau});
             console.log(this.state.plateau)
+            this.setState({cardSelected: null});
+            this.props.fromChild(null);
+            console.log(this.props.cardSelected);
             }
         }
         

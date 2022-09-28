@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from '../css/GameScreen.module.css';
 import GameGrid from '../components/GameGrid'
-import Card from '../components/Card'
 import Deck from '../components/Deck'
 import DeckAdversaire from '../components/DeckAdversaire'
 import generateCard from '../functions/generateCard';
@@ -38,6 +37,7 @@ function generateDeck(){
     for(var i = 0; i < 4; i++){
         deck.push(generateCard());
     }
+    // console.log(this.state);
     return deck;
 }
 
@@ -49,25 +49,6 @@ function createEmptyPlateau(){
     return plateau;
 }
 
-function generateRandomPlateau(){
-    var plateau = createEmptyPlateau();
-    for(var i = 0; i < 3; i++){
-        for(var j = 0; j < 4; j++){
-            var random = Math.floor(Math.random() * 2);
-            if(random === 1){
-                plateau[i][j] = generateCard();
-            }
-        }
-    }
-    return plateau;
-}
-
-function generateDeck2(){
-    var deck = [];
-    for(var i = 0; i < 4; i++){
-        deck.push(this.state.cards[Math.floor(Math.random() * this.state.cards.length)]);
-    }
-}
 
 function removeCardFromDeck(index) {
     let deck = this.state.deck;
@@ -75,6 +56,26 @@ function removeCardFromDeck(index) {
     this.setState({deck: deck});
     this.state.deck.splice(index, 0, generateCard());
 }
+
+/*
+async function generateCard2(){
+    var cards = [];
+    var card = {};
+    const querySnapshot = await getDocs(collection(db, "cards"));
+    querySnapshot.forEach((doc) => {
+        cards.push(doc.data());
+        });
+    // console.log(cards);
+    var random = Math.floor(Math.random() * cards.length);
+        var card = {
+        name: cards[random].name,
+        pv: cards[random].pv,
+        attack: cards[random].attack,
+        img: cards[random].img,
+    }
+    return card;
+}
+*/
 
 export default class GameScreen extends Component {
     constructor(props) {
@@ -86,12 +87,33 @@ export default class GameScreen extends Component {
             cards: [],
             cardSelected: null,
         };
-      }
+      };
+
+    // async componentWillMount() {
+    //     var cards = [];
+    //     var card = {};
+    //     const querySnapshot = await getDocs(collection(db, "cards"));
+    //     querySnapshot.forEach((doc) => {
+    //         cards.push(doc.data());
+    //         });
+    //     // console.log(cards);
+    //     var random = Math.floor(Math.random() * cards.length);
+    //         var card = {
+    //         name: cards[random].name,
+    //         pv: cards[random].pv,
+    //         attack: cards[random].attack,
+    //         img: cards[random].img,
+    //     }
+    //     this.setState({cards: cards});
+    //     console.log(this.state.cards);
+    //     return card;
+    // }
+      
+
       handleCallback = (childData) => {
         this.setState({ heart: childData});
         this.setState({ cardSelected: childData});
     };
-
 
 render() {
     return(
@@ -101,7 +123,7 @@ render() {
             <button type="button">Fin du tour</button>
 
             <Deck value={this.state.deck} fromChildCard={this.handleCallback}/>
-            {/* <button onClick={() => {console.log(this.state.cardSelected)}}>heart</button> */}
+            <button onClick={() => {console.log(getCardFromDB())}}>heart</button>
 
 		</div>
 	)

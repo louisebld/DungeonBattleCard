@@ -24,7 +24,7 @@ function generateCard(){
     return card;
 }
 
-// async function generateCard(){
+// async function generateCard2(){
 //     var cards = [];
 //     var card = {};
 //     const querySnapshot = await getDocs(collection(db, "cards"));
@@ -32,7 +32,6 @@ function generateCard(){
 //         cards.push(doc.data());
 //         });
 //     // console.log(cards);
-//     console.log(cards);
 //     var random = Math.floor(Math.random() * cards.length);
 //         var card = {
 //         name: cards[random].name,
@@ -43,9 +42,14 @@ function generateCard(){
 //     return card;
 // }
 
-// function generateCard3(){
-//     generateCard().then((card) => {
-//             return card;
+// function generateCard(){
+//     generateCard2().then((card) => {
+//             return {
+//                 name: card.name,
+//                 pv: card.pv,
+//                 attack: card.attack,
+//                 img: card.img,
+//             }
 
 //     })
 // }

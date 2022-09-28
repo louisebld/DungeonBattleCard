@@ -57,6 +57,12 @@ function removeCardFromDeck(index) {
     this.state.deck.splice(index, 0, generateCard());
 }
 
+
+function printProps(state){
+    console.log(state);
+}
+
+
 /*
 async function generateCard2(){
     var cards = [];
@@ -115,6 +121,15 @@ export default class GameScreen extends Component {
         this.setState({ cardSelected: childData});
     };
 
+    computerPlaceCard(){
+        var card = generateCard();
+        var index = Math.floor(Math.random() * 3);
+        var plateau = this.state.plateau;
+        plateau[index][0] = card;
+        this.setState({plateau: plateau});
+    }
+    
+
 render() {
     return(
 		<div className={styles.main}>
@@ -123,7 +138,7 @@ render() {
             <button type="button">Fin du tour</button>
 
             <Deck value={this.state.deck} fromChildCard={this.handleCallback}/>
-            <button onClick={() => {console.log(getCardFromDB())}}>heart</button>
+            <button onClick={() => {this.computerPlaceCard()}}>heart</button>
 
 		</div>
 	)

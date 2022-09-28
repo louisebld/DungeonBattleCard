@@ -2,11 +2,26 @@
     background-color: #82A3A1;
     height: auto;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     border-radius: 1rem;
     padding: 0.5rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.grid{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+}
+
+.base_title{
+    font-size: 25px;
+    margin: 0.5rem;
 }
 
 .column{
@@ -19,6 +34,16 @@
     margin-left: 0.2rem;
 }
 
+.list_base_heart{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    width: 80%;
+    margin-right: 1.7rem;
+    margin-left: 1.7rem;
+}
+
 .button_heart{
     margin-top: 0.4rem;
     padding: 6px 10px 6px 10px;
@@ -26,7 +51,8 @@
     background-color: #465362;
     cursor: pointer;
     border-radius: 5px;
-    transition: 0.3s;}
+    transition: 0.3s;
+}
 
 
 .button_heart:hover{

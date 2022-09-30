@@ -35,7 +35,7 @@ function getCard(id){
 function generateDeck(){
     var deck = [];
     for(var i = 0; i < 4; i++){
-        deck.push(generateCard());
+        deck.push(generateCard('me'));
     }
     // console.log(this.state);
     return deck;
@@ -92,6 +92,7 @@ export default class GameScreen extends Component {
             plateau: createEmptyPlateau(),
             cards: [],
             cardSelected: null,
+            played:false,
         };
       };
 
@@ -122,23 +123,65 @@ export default class GameScreen extends Component {
     };
 
     computerPlaceCard(){
-        var card = generateCard();
+        var card = generateCard('computer');
         var index = Math.floor(Math.random() * 3);
         var plateau = this.state.plateau;
         plateau[index][0] = card;
         this.setState({plateau: plateau});
+    }
+
+    AvanceColonne1(){
+        var plateau = this.state.plateau;
+        var nouveauplateau = createEmptyPlateau();
+        for(var i = 0; i < 3; i++){
+            for(var j = 0; j < 3; j++){
+                var card = plateau[i][j];
+                console.log(card);
+                if(plateau[i][j] != []){
+                    if (plateau[i][j].who == "computer")
+                    {
+                        nouveauplateau[i][j+1] = plateau[i][j];
+                        
+                    } else {
+
+                        
+                        console.log("position après ", i, j);
+                        console.log("position avant", i, j);
+
+                        // nouveauplateau[i][j] = plateau[i][j];
+                    }
+                }
+            }
+        }
+        console.log(plateau);
+        console.log(nouveauplateau);
+        this.setState({plateau: nouveauplateau});
+    }
+
+    finDuTour(){
+        this.computerPlaceCard();
+        this.AvanceColonne1();
+        this.setState({played: false});
     }
     
 
 render() {
     return(
 		<div className={styles.main}>
+
+            {/* <div classname={styles.monsterplay}> Les montres jouent </div> */}
+        
 			<DeckAdversaire/>
-			<GameGrid value={this.state.plateau} cardSelected={this.state.cardSelected} fromChild={this.handleCallback}/>
-            <button type="button">Fin du tour</button>
+			<GameGrid value={this.state.plateau} cardSelected={this.state.cardSelected} fromChild={this.handleCallback} played={this.state.played}/>
+            <button onClick={() => {this.finDuTour()}} type="button">Fin du tour</button>
 
             <Deck value={this.state.deck} fromChildCard={this.handleCallback}/>
             <button onClick={() => {this.computerPlaceCard()}}>heart</button>
+            <button onClick={() => {this.AvanceColonne1()}}>avance</button>
+            <button onClick={() => {getCardFromDB()}}>bdd</button>
+
+            
+
 
 		</div>
 	)

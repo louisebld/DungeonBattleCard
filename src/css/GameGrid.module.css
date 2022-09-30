@@ -44,6 +44,16 @@
     margin-left: 1.7rem;
 }
 
+.list_base_heartenemy{
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    width: 80%;
+    margin-right: 1.7rem;
+    margin-left: 1.7rem;
+    display:none;
+}
+
 .button_heart{
     margin-top: 0.4rem;
     padding: 6px 10px 6px 10px;
@@ -67,3 +77,4 @@
 .undisplay{
     display: none;
 }
+

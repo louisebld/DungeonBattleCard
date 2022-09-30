@@ -8,7 +8,7 @@ const troll = '../assets/png/troll.png';
 const goblin = '../assets/png/goblin.png';
 
 
-function generateCard(){
+function generateCard(who){
     var possiblenames = ["coco", "rico", "pépito", "patate", "cricri"]
     var img = [cyclop, troll, goblin]
     var pv = Math.floor(Math.random() * 10) + 1;
@@ -19,7 +19,8 @@ function generateCard(){
         name: name,
         pv: pv,
         attack: attack,
-        img: img[Math.floor(Math.random() * img.length)]
+        img: img[Math.floor(Math.random() * img.length)],
+        who:who,
     }
     return card;
 }

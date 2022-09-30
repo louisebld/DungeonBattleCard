@@ -6,3 +6,9 @@
     align-items: center;
     height: 100vh;
 }
+
+.monsterplay{
+    color:'red';
+    position: 'absolute';
+    top: 50;
+}

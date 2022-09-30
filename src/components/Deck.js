@@ -43,7 +43,7 @@ export default class Deck extends React.Component {
         return (
             <div className={styles.container} onClick={() => console.log(this.state.deck)}>
                 {this.props.value.map((card, index) => {
-                    return <div onClick={() => this.cardSelected(index)}><Card id={"#card_ + {index}"} key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} isClicked={{index}===this.props.cardSelected}/></div>
+                    return <div className={styles.card} onClick={() => this.cardSelected(index)}><Card id={"#card_ + {index}"} key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who} isClicked={{index}===this.props.cardSelected}/></div>
                 })}
             </div>
         );

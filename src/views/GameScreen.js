@@ -10,7 +10,6 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from '../firebase.js';
 import { getFirestore } from 'firebase/firestore/lite'
 import { collection, getDocs } from "firebase/firestore";
-import Card from './Card';
 // const [win, setWin] = useState(false);
 
 
@@ -20,7 +19,6 @@ async function getCardFromDB(){
     querySnapshot.forEach((doc) => {
         console.log(doc.id, " => ", doc.data());
         console.log(doc.data().name);
-        // <Card name={doc.data().name} pv={doc.data().pv} attack={doc.data().attack} img={doc.data().img}/>
     });
 }
 
@@ -66,6 +64,10 @@ function removeCardFromDeck(index) {
 function printProps(state){
     console.log(state);
 }
+
+const sleep = ms => new Promise(
+    resolve => setTimeout(resolve, ms)
+  );
 
 
 /*
@@ -123,8 +125,9 @@ export default class GameScreen extends Component {
       
 
       handleCallback = (childData) => {
-        this.setState({ heart: childData});
-        this.setState({ cardSelected: childData});
+        this.setState({heart: childData});
+        // this.setState({played: childData});
+        this.setState({cardSelected: childData});
     };
 
     computerPlaceCard(){
@@ -139,21 +142,19 @@ export default class GameScreen extends Component {
         var plateau = this.state.plateau;
         var nouveauplateau = createEmptyPlateau();
         for(var i = 0; i < 3; i++){
-            for(var j = 0; j < 3; j++){
+            for(var j = 0; j < 4; j++){
                 var card = plateau[i][j];
-                console.log(card);
-                if(plateau[i][j] != []){
+                if(plateau[i][j].length != 0){
+                    console.log(card.who);
                     if (plateau[i][j].who == "computer")
                     {
-                        nouveauplateau[i][j+1] = plateau[i][j];
+                            nouveauplateau[i][j+1] = plateau[i][j];
                         
                     } else {
-
-                        
                         console.log("position après ", i, j);
                         console.log("position avant", i, j);
 
-                        // nouveauplateau[i][j] = plateau[i][j];
+                        nouveauplateau[i][j-1] = plateau[i][j];
                     }
                 }
             }
@@ -163,27 +164,29 @@ export default class GameScreen extends Component {
         this.setState({plateau: nouveauplateau});
     }
 
-    finDuTour(){
+    async finDuTour(){
         this.computerPlaceCard();
+        await sleep(1000);
         this.AvanceColonne1();
         this.setState({played: false});
+
+        
     }
     
 
 render() {
     return(
-		<div className={styles.main}>
-
-            {/* <div classname={styles.monsterplay}> Les montres jouent </div> */}
-        
+		<div className={styles.main}>        
 			<DeckAdversaire/>
 			<GameGrid value={this.state.plateau} cardSelected={this.state.cardSelected} fromChild={this.handleCallback} played={this.state.played}/>
-            <button onClick={() => {this.finDuTour()}} type="button">Fin du tour</button>
+
+            <button className={styles.button} onClick={() => {this.finDuTour()}} type="button">Fin du tour</button>
 
             <Deck value={this.state.deck} fromChildCard={this.handleCallback}/>
-            <button onClick={() => {this.computerPlaceCard()}}>heart</button>
+            {/* <button onClick={() => {this.computerPlaceCard()}}>heart</button>
             <button onClick={() => {this.AvanceColonne1()}}>avance</button>
-            <button onClick={() => {getCardFromDB()}}>bdd</button>
+             */}
+            <button onClick={() => {console.log(this.state.cardSelected)}}>card</button>
 
 		</div>
 	)

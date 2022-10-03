@@ -99,6 +99,7 @@ export default class GameScreen extends Component {
         super(props);
         this.state = {
             heart:0,
+            heartEnemy: 0,
             deck: generateDeck(),
             plateau: createEmptyPlateau(),
             cards: [],

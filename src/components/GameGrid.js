@@ -11,7 +11,8 @@ export default class GameGridV2 extends React.Component {
         this.state = {
             plateau: this.props.value,
             cardSelected : this.props.cardSelected,
-            heart: 0,
+            heart: this.props.heart,
+            heartEnemy: this.props.heartEnemy,
             played:this.props.played,
         };
 }
@@ -39,8 +40,14 @@ export default class GameGridV2 extends React.Component {
         document.querySelector("#base_title").classList.add(styles.undisplay);
         document.querySelector("#base_heart").style.display = "flex";
         this.state.heart = event;
-        // this.sendData(event);
         this.setState({heart: event})
+
+        // Create enemy base
+        var pos = Math.floor(Math.random() * 2) + 1;
+        this.state.heartEnemy = pos;
+        this.setState({heartEnemy: pos})
+        document.getElementById(pos).classList.add(styles.enemyBase);
+        // console.log("le base de l'ennemi se trouve en colonne : " + pos);
     }
 
     pushCardPlateau = (index) => {
@@ -71,9 +78,9 @@ export default class GameGridV2 extends React.Component {
             <div className={styles.container}>
                 <div id="base_title" className={styles.base_title}>Placez votre coeur ! </div>
                 <div id="base_heart" className={styles.list_base_heartenemy}>
-                    <button id="base_heart" className={styles.button_heart} onClick={() => {this.handleClickSelectBase(1)}}>❔</button>
-                    <button id="base_heart" className={styles.button_heart} onClick={() => {this.handleClickSelectBase(2)}}>❔</button>
-                    <button id="base_heart" className={styles.button_heart} onClick={() => {this.handleClickSelectBase(3)}}>❔</button>
+                    <button id="1" className={styles.button_heart}>❔</button>
+                    <button id="2" className={styles.button_heart}>❔</button>
+                    <button id="3" className={styles.button_heart}>❔</button>
                 </div>
 
                 <div className={styles.grid}>

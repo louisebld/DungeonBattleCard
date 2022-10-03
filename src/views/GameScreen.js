@@ -10,6 +10,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from '../firebase.js';
 import { getFirestore } from 'firebase/firestore/lite'
 import { collection, getDocs } from "firebase/firestore";
+// import Card from './Card';
 // const [win, setWin] = useState(false);
 
 

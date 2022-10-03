@@ -5,6 +5,7 @@ import GameGrid from '../components/GameGrid'
 import Deck from '../components/Deck'
 import DeckAdversaire from '../components/DeckAdversaire'
 import generateCard from '../functions/generateCard';
+import generateCardFromFireB from '../functions/generateCardFromDB';
 
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../firebase.js';
@@ -40,6 +41,8 @@ function generateDeck(){
     var deck = [];
     for(var i = 0; i < 4; i++){
         deck.push(generateCard('me'));
+        // deck.push(generateCardFromFireB());
+
     }
     // console.log(this.state);
     return deck;
@@ -48,7 +51,7 @@ function generateDeck(){
 function createEmptyPlateau(){
     var plateau = [];
     for(var i = 0; i < 3; i++){
-        plateau.push([[], [], [], []]);
+        plateau.push([[], [], [], [], [], []]);
     }
     return plateau;
 }
@@ -143,7 +146,8 @@ export default class GameScreen extends Component {
         var plateau = this.state.plateau;
         var nouveauplateau = createEmptyPlateau();
         for(var i = 0; i < 3; i++){
-            for(var j = 0; j < 4; j++){
+            for(var j = 0; j < plateau[0].length; j++){
+                
                 var card = plateau[i][j];
                 if(plateau[i][j].length != 0){
                     console.log(card.who);
@@ -160,8 +164,8 @@ export default class GameScreen extends Component {
                 }
             }
         }
-        console.log(plateau);
-        console.log(nouveauplateau);
+        // console.log(plateau);
+        // console.log(nouveauplateau);
         this.setState({plateau: nouveauplateau});
     }
 
@@ -187,7 +191,7 @@ render() {
             {/* <button onClick={() => {this.computerPlaceCard()}}>heart</button>
             <button onClick={() => {this.AvanceColonne1()}}>avance</button>
              */}
-            <button onClick={() => {console.log(this.state.cardSelected)}}>card</button>
+            <button onClick={() => {console.log(this.state.deck)}}>card</button>
 
 		</div>
 	)

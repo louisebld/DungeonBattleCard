@@ -78,3 +78,6 @@
     display: none;
 }
 
+.enemyBase{
+    background-color: red;
+}

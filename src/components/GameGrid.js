@@ -14,10 +14,14 @@ export default class GameGridV2 extends React.Component {
             heart: 0,
             played:this.props.played,
         };
-      }
-      sendData(nb){
-        this.props.fromChild(nb);
-      };
+}
+    //   sendData(nb){
+    //     this.props.fromChild(nb);
+    //   };
+
+    //   sendPlayed(played){
+    //     this.props.fromChild(played);
+    // };
     
 
 
@@ -34,26 +38,29 @@ export default class GameGridV2 extends React.Component {
         document.querySelector("#btn_" + event).classList.add(styles.disabled);
         document.querySelector("#base_title").classList.add(styles.undisplay);
         document.querySelector("#base_heart").style.display = "flex";
-        // var div = document.querySelector("placeheart");
-        // on cache placeheart
-        // div.style.display = "none";        
         this.state.heart = event;
-        this.sendData(event);
+        // this.sendData(event);
+        this.setState({heart: event})
     }
 
     pushCardPlateau = (index) => {
-        if(!this.state.played) {
+        // console.log("yoyuyouy")
+        if(!this.props.played) {
+            // console.log("passe ici");
         if(this.props.cardSelected !== null){
+            // console.log("passe ici aussi");
             if (this.state.heart != 0){
-                let plateau = this.state.plateau;
+                // console.log("weeeeesh")
+                // let plateau = this.state.plateau;
+                let plateau = this.props.value;
                 let card = this.props.cardSelected;            
                 plateau[index][3] = card;
+                console.log(plateau)
                 this.setState({plateau: plateau});
-                console.log(this.state.plateau)
                 this.setState({cardSelected: null});
-                this.props.fromChild(null);
-                console.log(this.props.cardSelected);
                 this.state.played = true;
+                // this.setState({played: true});
+                // console.log("j'ai set que le truc est à true normalement wesh")
             }
         }
     }
@@ -72,7 +79,7 @@ export default class GameGridV2 extends React.Component {
                 <div className={styles.grid}>
                     <div className={styles.column}>
                         {this.props.value[0].map((card, index) => {
-                            if(index === 3){
+                            if(index === this.props.value[0].length -1){
                                 if(card.name){
                                     return <Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img}/>
                                 }else{
@@ -91,7 +98,7 @@ export default class GameGridV2 extends React.Component {
                     <div className={styles.column}>
 
                         {this.props.value[1].map((card, index) => {
-                            if(index === 3){
+                            if(index === this.props.value[0].length -1){
                                 if(card.name){
                                     return <Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img}/>
                                 }else{
@@ -108,7 +115,7 @@ export default class GameGridV2 extends React.Component {
                     </div>
                     <div className={styles.column}>
                         {this.props.value[2].map((card, index) => {
-                            if(index === 3){
+                            if(index === this.props.value[0].length -1){
                                 if(card.name){
                                     return <Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img}/>
                                 }else{
@@ -129,7 +136,12 @@ export default class GameGridV2 extends React.Component {
                     <button id="btn_2" className={styles.button_heart} onClick={() => {this.handleClickSelectBase(2)}}>💙</button>
                     <button id="btn_3" className={styles.button_heart} onClick={() => {this.handleClickSelectBase(3)}}>❤️</button>
                 </div>
+
+                {/* <button id="btn_3" className={styles.button_heart} onClick={() => {console.log(this.props.value)}}>test</button>
+                <button id="btn_3" className={styles.button_heart} onClick={() => {console.log(this.state.plateau)}}>test</button> */}
+
             </div>
+            
             
         )
     }

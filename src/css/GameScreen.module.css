@@ -12,3 +12,15 @@
     position: 'absolute';
     top: 50;
 }
+
+.button {
+    color:'white';
+    height:35px;
+    background-color: #465362;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    padding: 12px 20px 12px 20px;
+    font-size: 15px;
+    cursor: pointer;
+    border : none;
+    border-radius: 15px;
+}

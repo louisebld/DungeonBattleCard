@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Link} from "react-router-dom";
 import styles from '../css/HomeScreen.module.css';
 import generateCard from '../functions/generateCard';
+import generateCardFromFireB from '../functions/generateCardFromDB'
 import { v4 as uuidv4, v4 } from 'uuid';
 
 import logo from '../assets/png/dungeon.png';
@@ -14,7 +15,7 @@ export default function HomeScreen (){
 
         // add a card into the deck from the generateCard function
         function addCardToDeck(deck){
-            const card = generateCard();
+            const card = generateCardFromFireB();
             // wait till the card is generated
             card.then(
                 (card) => {

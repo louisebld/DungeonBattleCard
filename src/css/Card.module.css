@@ -3,7 +3,7 @@
     height: 60px;
     margin: 0.2rem;
     padding: 0.2rem;
-    background-color: #4B4E6D;
+    background-color: #095228;
     border-radius: 10px;
     display: flex;
     justify-content: space-between;
@@ -12,6 +12,23 @@
     cursor: pointer;
     transition: 0.2s;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.card_enemy{
+    width: 50px;
+    height: 60px;
+    margin: 0.2rem;
+    padding: 0.2rem;
+    background-color: #8b0000;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
 }
 
 /* .card:hover{

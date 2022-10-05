@@ -31,20 +31,18 @@ export default class Deck extends React.Component {
     cardSelected(index){
         this.setState({cardSelected: this.state.deck[index]});
         this.sendCardSelected(this.state.deck[index]);
-
         var card = document.querySelector("#card_" + index);
         if (card !== null) {
-            console.log(card);
+            // console.log(card);
             card.style.height='100px';
         }
     }
 
     render() {
         return (
-            // onClick={() => console.log(this.state.deck)}
             <div className={styles.container}>
                 {this.props.value.map((card, index) => {
-                    return <div className={styles.card} onClick={() => this.cardSelected(index)}><Card id={"#card_ + {index}"} key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who} isClicked={{index}===this.props.cardSelected}/></div>
+                    return <div className={styles.card} onClick={() => this.cardSelected(index)}><Card id={"#card_ + {index}"} key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who} isClicked={this.state.deck[index]==this.state.cardSelected} index={index}/></div>
                 })}
             </div>
         );

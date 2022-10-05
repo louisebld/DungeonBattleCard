@@ -61,8 +61,6 @@ export default class GameGridV2 extends React.Component {
 
     pushCardPlateau = (index) => {
         // console.log("yoyuyouy")
-        console.log(this.state.heart)
-        console.log(this.props.heart)
         if(!this.props.played) {
             // console.log("passe ici");
         if(this.props.cardSelected !== null){
@@ -73,7 +71,6 @@ export default class GameGridV2 extends React.Component {
                 let plateau = this.props.value;
                 let card = this.props.cardSelected;            
                 plateau[index][plateau[0].length-1] = card;
-                console.log(plateau)
                 this.setState({plateau: plateau});
                 this.setState({cardSelected: null});
                 this.state.played = true;
@@ -99,13 +96,13 @@ export default class GameGridV2 extends React.Component {
                         {this.props.value[0].map((card, index) => {
                             if(index === this.props.value[0].length -1){
                                 if(card.name){
-                                    return <Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img}/>
+                                    return <Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who}/>
                                 }else{
                                     return <div onClick={() => this.pushCardPlateau(0)}><EmptyCard/></div>
                                 }
                             }else{
                                 if(card.name){
-                                    return <Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img}/>
+                                    return <Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who}/>
                                 }else{
                                     return <EmptyCard/>
                                 }
@@ -118,13 +115,13 @@ export default class GameGridV2 extends React.Component {
                         {this.props.value[1].map((card, index) => {
                             if(index === this.props.value[0].length -1){
                                 if(card.name){
-                                    return <Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img}/>
+                                    return <Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who}/>
                                 }else{
                                     return <div onClick={() => this.pushCardPlateau(1)}><EmptyCard/></div>
                                 }
                             }else{
                                 if(card.name){
-                                    return <Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img}/>
+                                    return <Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who}/>
                                 }else{
                                     return <EmptyCard/>
                                 }
@@ -135,13 +132,13 @@ export default class GameGridV2 extends React.Component {
                         {this.props.value[2].map((card, index) => {
                             if(index === this.props.value[0].length -1){
                                 if(card.name){
-                                    return <Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img}/>
+                                    return <Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who}/>
                                 }else{
                                     return <div onClick={() => this.pushCardPlateau(2)}><EmptyCard/></div>
                                 }
                             }else{
                                 if(card.name){
-                                    return <Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img}/>
+                                    return <Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who}/>
                                 }else{
                                     return <EmptyCard/>
                                 }

@@ -183,7 +183,7 @@ export default class GameScreen extends Component {
     }
 
     async finDuTour(){
-        // this.computerPlaceCard();
+        this.computerPlaceCard();
         await sleep(1000);
         this.AvanceColonne1();
         this.setState({played: false});

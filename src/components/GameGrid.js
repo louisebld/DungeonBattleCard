@@ -14,6 +14,7 @@ export default class GameGridV2 extends React.Component {
             heart: this.props.heart,
             heartEnemy: this.props.heartEnemy,
             played:this.props.played,
+            emplacementTouche : this.props.emplacementTouche,
         };
 }
     //   sendData(nb){
@@ -24,6 +25,14 @@ export default class GameGridV2 extends React.Component {
     //     this.props.fromChild(played);
     // };
     
+    ButtonEnemyHeart(nb){
+        if(this.props.emplacementTouche[nb-1] == true){
+            return <button id={nb} className={styles.button_heart}>✖️</button>
+        }
+        else {
+            return <button id={nb} className={styles.button_heart}>❔</button>
+        }
+    }
 
 
     handleClickSelectBase (event){
@@ -52,6 +61,8 @@ export default class GameGridV2 extends React.Component {
 
     pushCardPlateau = (index) => {
         // console.log("yoyuyouy")
+        console.log(this.state.heart)
+        console.log(this.props.heart)
         if(!this.props.played) {
             // console.log("passe ici");
         if(this.props.cardSelected !== null){
@@ -78,9 +89,9 @@ export default class GameGridV2 extends React.Component {
             <div className={styles.container}>
                 <div id="base_title" className={styles.base_title}>Placez votre coeur ! </div>
                 <div id="base_heart" className={styles.list_base_heartenemy}>
-                    <button id="1" className={styles.button_heart}>❔</button>
-                    <button id="2" className={styles.button_heart}>❔</button>
-                    <button id="3" className={styles.button_heart}>❔</button>
+                    {this.ButtonEnemyHeart(1)}
+                    {this.ButtonEnemyHeart(2)}
+                    {this.ButtonEnemyHeart(3)}
                 </div>
 
                 <div className={styles.grid}>
@@ -144,8 +155,9 @@ export default class GameGridV2 extends React.Component {
                     <button id="btn_3" className={styles.button_heart} onClick={() => {this.handleClickSelectBase(3)}}>❤️</button>
                 </div>
 
-                {/* <button id="btn_3" className={styles.button_heart} onClick={() => {console.log(this.props.value)}}>test</button>
-                <button id="btn_3" className={styles.button_heart} onClick={() => {console.log(this.state.plateau)}}>test</button> */}
+                {/* {/* <button id="btn_3" className={styles.button_heart} onClick={() => {console.log(this.props.value)}}>test</button> */}
+                {/* <button id="btn_3" className={styles.button_heart} onClick={() => {console.log(this.props.emplacementTouche)}}>test</button> */}
+
 
             </div>
             

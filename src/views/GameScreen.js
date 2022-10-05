@@ -105,6 +105,7 @@ export default class GameScreen extends Component {
             cards: [],
             cardSelected: null,
             played:false,
+            emplacementTouche : [false, false, false],
         };
       };
 
@@ -151,27 +152,38 @@ export default class GameScreen extends Component {
                 
                 var card = plateau[i][j];
                 if(plateau[i][j].length != 0){
-                    console.log(card.who);
+                    // console.log(card.who);
                     if (plateau[i][j].who == "computer")
                     {
                             nouveauplateau[i][j+1] = plateau[i][j];
                         
                     } else {
-                        console.log("position après ", i, j);
-                        console.log("position avant", i, j);
+                        // console.log("position après ", i, j);
+                        // console.log("position avant", i, j);
 
                         nouveauplateau[i][j-1] = plateau[i][j];
                     }
                 }
             }
+
         }
+
+        for(var i = 0; i < 3; i++){
+            if (nouveauplateau[i][0].who == "me"){
+                var emplacementTouche = [this.state.emplacementTouche[0], this.state.emplacementTouche[1], this.state.emplacementTouche[2]];
+                emplacementTouche[i] = true;
+                this.setState({emplacementTouche : emplacementTouche});
+            }
+        }
+
+
         // console.log(plateau);
         // console.log(nouveauplateau);
         this.setState({plateau: nouveauplateau});
     }
 
     async finDuTour(){
-        this.computerPlaceCard();
+        // this.computerPlaceCard();
         await sleep(1000);
         this.AvanceColonne1();
         this.setState({played: false});
@@ -184,7 +196,7 @@ render() {
     return(
 		<div className={styles.main}>        
 			<DeckAdversaire/>
-			<GameGrid value={this.state.plateau} cardSelected={this.state.cardSelected} fromChild={this.handleCallback} played={this.state.played}/>
+			<GameGrid value={this.state.plateau} heart={this.state.heart} cardSelected={this.state.cardSelected} fromChild={this.handleCallback} played={this.state.played} emplacementTouche={this.state.emplacementTouche}/>
 
             <button className={styles.button} onClick={() => {this.finDuTour()}} type="button">Fin du tour</button>
 
@@ -192,7 +204,7 @@ render() {
             {/* <button onClick={() => {this.computerPlaceCard()}}>heart</button>
             <button onClick={() => {this.AvanceColonne1()}}>avance</button>
              */}
-            <button onClick={() => {console.log(this.state.deck)}}>card</button>
+            {/* <button onClick={() => {console.log(this.state.emplacementTouche)}}>card</button> */}
 
 		</div>
 	)

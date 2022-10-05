@@ -5,7 +5,6 @@ import GameGrid from '../components/GameGrid'
 import Deck from '../components/Deck'
 import DeckAdversaire from '../components/DeckAdversaire'
 import generateCard from '../functions/generateCard';
-import generateCardFromFireB from '../functions/generateCardFromDB';
 
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../firebase.js';
@@ -128,9 +127,8 @@ export default class GameScreen extends Component {
     //     console.log(this.state.cards);
     //     return card;
     // }
-      
 
-      handleCallback = (childData) => {
+    handleCallback = (childData) => {
         this.setState({heart: childData});
         // this.setState({played: childData});
         this.setState({cardSelected: childData});

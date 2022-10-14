@@ -188,6 +188,7 @@ export default class GameScreen extends Component {
                 this.setState({emplacementTouche : emplacementTouche});
             }
         }
+        this.detectWinner();
 
 
         // console.log(plateau);
@@ -249,6 +250,18 @@ export default class GameScreen extends Component {
             }
         }
         return plateau;
+    }
+
+    detectWinner(){
+        console.log("emplacement touche : " + this.state.emplacementTouche);
+        console.log("coeur enemie : " + this.state.heartEnemy);
+        for (var i = 0; i < 3; i++){
+            if (this.state.emplacementTouche[this.heartEnemy] == true){
+                alert("Tu as gagné");
+                return true;
+            }
+        }
+        return false
     }
 
     async finDuTour(){

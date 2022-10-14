@@ -29,10 +29,10 @@ export default class GameGridV2 extends React.Component {
     
     ButtonEnemyHeart(nb){
         if(this.props.emplacementTouche[nb-1] == true){
-            return <button id={nb} className={styles.button_heart}>✖️</button>
+            return <button id={"enemy_" + nb} className={styles.button_heart}>✖️</button>
         }
         else {
-            return <button id={nb} className={styles.button_heart}>❔</button>
+            return <button id={"enemy_" + nb} className={styles.button_heart}>❔</button>
         }
     }
 
@@ -54,10 +54,12 @@ export default class GameGridV2 extends React.Component {
         this.setState({heart: event})
 
         // Create enemy base
-        var pos = Math.floor(Math.random() * 2) + 1;
+        var pos = Math.floor(Math.random() * 3) + 1;
+        // console.log("le base de l'ennemi se trouve en colonne : " + pos);
         this.state.heartEnemy = pos;
         this.setState({heartEnemy: pos})
-        document.getElementById(pos).classList.add(styles.enemyBase);
+        // add color to the right button
+        document.querySelector("#enemy_" + pos).classList.add(styles.enemyBase);
         // console.log("le base de l'ennemi se trouve en colonne : " + pos);
     }
 

@@ -19,7 +19,6 @@ export default class Deck extends React.Component {
         }
     }
 
-
     sendCardSelected(nb){
         this.props.fromChildCard(nb);
       };
@@ -37,10 +36,11 @@ export default class Deck extends React.Component {
     cardSelected(index){
         this.setState({cardSelected: this.state.deck[index]});
         this.sendCardSelected(index);
-        var card = document.querySelector("#card_" + index);
+        console.log("bonjour")
+        var card = document.getElementById("#card" + index);
+        console.log(card);
         if (card !== null) {
-            // console.log(card);
-            card.style.height='100px';
+            // card.style.height='100px';
         }
     }
 
@@ -50,7 +50,7 @@ export default class Deck extends React.Component {
         return (
             <div className={styles.container}>
                 {this.props.value.map((card, index) => {
-                    return <div className={styles.card} onClick={() => this.cardSelected(index)}><Card id={"#card_ + {index}"} key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who} isClicked={this.state.deck[index] == this.state.cardSelected} index={index} /></div>;
+                    return <div className={styles.card} onClick={() => this.cardSelected(index)}><Card id={"#card_ + {index}"} key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who} index={index} /></div>;
                 })}
             </div>
 

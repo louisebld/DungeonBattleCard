@@ -4,24 +4,13 @@ import troll from '../assets/png/troll.png';
 
 export default class Card extends React.Component {
     handleClick(e) {
-        console.log(e);
+        // console.log(e);        
     }
     Card(){
     
     }
     
     render() {
-
-        // console.log(this.props.index)
-        // if(this.props.isClicked){
-        //     document.getElementById("#card" + this.props.index).style.height='100px';
-        //     console.log(document.getElementById(this.props.index))
-        // }
-        // else {
-        //     if (this.props.index){
-        //         // document.getElementById("#card" + this.props.index).style.height='60px';
-        //     }
-        // }
 
         if(this.props.who =="me"){
             return (

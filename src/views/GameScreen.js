@@ -4,7 +4,6 @@ import styles from '../css/GameScreen.module.css';
 import GameGrid from '../components/GameGrid'
 import Deck from '../components/Deck'
 import DeckAdversaire from '../components/DeckAdversaire'
-import generateCard from '../functions/generateCard';
 import { v4 as uuidv4, v4 } from 'uuid';
 
 import { doc, getDoc } from "firebase/firestore";
@@ -50,29 +49,6 @@ async function getAllCardsFromDb(){
     return cardsFromDb;
 }
 
-async function getCardFromDB2(id){
-    const docRef = doc(db, "cards", id);
-    const docSnap = await getDoc(docRef);
-    return docSnap.data();
-}
-
-function getCard(id){
-    getCardFromDB2(id).then((card) => {
-        return card;
-    })
-}
-
-
-function generateDeck(){
-    var deck = [];
-    for(var i = 0; i < 4; i++){
-        deck.push(generateCard('me'));
-        // deck.push(generateCardFromFireB());
-
-    }
-    // console.log(this.state);
-    return deck;
-}
 
 function createEmptyPlateau(){
     var plateau = [];
@@ -83,17 +59,12 @@ function createEmptyPlateau(){
 }
 
 
-function removeCardFromDeck(index) {
-    let deck = this.state.deck;
-    deck.splice(index, 1);
-    this.setState({deck: deck});
-    this.state.deck.splice(index, 0, generateCard());
-}
-
-
-function printProps(state){
-    console.log(state);
-}
+// function removeCardFromDeck(index) {
+//     let deck = this.state.deck;
+//     deck.splice(index, 1);
+//     this.setState({deck: deck});
+//     this.state.deck.splice(index, 0, generateCard());
+// }
 
 const sleep = ms => new Promise(
     resolve => setTimeout(resolve, ms)
@@ -119,17 +90,48 @@ export default class GameScreen extends Component {
         generateCards("me").then( (listCards) => {
                 this.setState({deck: listCards});
             }
-        )
+        );
+
+        getAllCardsFromDb().then( (listCards) => {
+            this.setState({cards: listCards});
+        }
+        );
     }
+
 
     handleCallback = (childData) => {
         this.setState({heart: childData});
         // this.setState({played: childData});
         this.setState({cardSelected: childData});
+
+        if(childData != "-1"){
+            var card = document.getElementById("#card" + childData);
+            card.style.height='100px';
+        }
+        // card.style.width='100px';
+        for(var i = 0; i < 4; i++)
+        {
+            if (i != childData){
+                var card = document.getElementById("#card" + i);
+                card.style.height='50px';
+            }
+        }
     };
 
+    generateCard(player){
+        var randomcard = this.state.cards[Math.floor(Math.random() * this.state.cards.length)];
+        var card = {
+            name: randomcard.name,
+            pv: randomcard.pv,
+            attack: randomcard.attack,
+            img: randomcard.img,
+            who:player,
+        }
+        return card;
+    }
+
     computerPlaceCard(){
-        var card = generateCard('computer');
+        var card = this.generateCard("computer");
         console.log(card);
         var index = Math.floor(Math.random() * 3);
         var plateau = this.state.plateau;
@@ -183,7 +185,7 @@ export default class GameScreen extends Component {
 
         
     }
-    
+
 
 render() {
     return(

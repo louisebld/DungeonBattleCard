@@ -24,6 +24,12 @@ export default class GameGridV2 extends React.Component {
     //   sendPlayed(played){
     //     this.props.fromChild(played);
     // };
+
+    sendCardSelected(nb){
+        this.props.fromChild(nb);
+      };
+
+
     
     ButtonEnemyHeart(nb){
         if(this.props.emplacementTouche[nb-1] == true){
@@ -73,7 +79,7 @@ export default class GameGridV2 extends React.Component {
                 console.log(card);          
                 plateau[index][plateau[0].length-1] = card;
                 this.setState({plateau: plateau});
-                this.setState({cardSelected: null});
+                this.sendCardSelected("-1");
                 this.state.played = true;
                 console.log(this.state.plateau);
                 // this.setState({played: true});

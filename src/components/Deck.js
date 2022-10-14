@@ -1,8 +1,13 @@
 import React from 'react';
 import Card from './Card';
-import styles from '../css/Deck.module.css';
-
+import FinalGenCard from '../functions/FinalGenCard';
 import generateCard from '../functions/generateCard';
+import styles from '../css/Deck.module.css';
+import { v4 as uuidv4, v4 } from 'uuid';
+import { db } from '../firebase.js';
+import { collection, getDocs } from "firebase/firestore";
+import {useEffect, useState} from 'react'
+
 
 export default class Deck extends React.Component {
     // transform the props to an array of cards
@@ -13,6 +18,7 @@ export default class Deck extends React.Component {
             cardSelected : this.props.cardSelected,
         }
     }
+
 
     sendCardSelected(nb){
         this.props.fromChildCard(nb);
@@ -25,12 +31,12 @@ export default class Deck extends React.Component {
         let deck = this.state.deck;
         deck.splice(index, 1);
         this.setState({deck: deck});
-        this.state.deck.splice(index, 0, generateCard());
+        this.state.deck.splice(index, 0, generateCard("me"));
     }
 
     cardSelected(index){
         this.setState({cardSelected: this.state.deck[index]});
-        this.sendCardSelected(this.state.deck[index]);
+        this.sendCardSelected(index);
         var card = document.querySelector("#card_" + index);
         if (card !== null) {
             // console.log(card);
@@ -38,13 +44,16 @@ export default class Deck extends React.Component {
         }
     }
 
+    
+
     render() {
         return (
             <div className={styles.container}>
                 {this.props.value.map((card, index) => {
-                    return <div className={styles.card} onClick={() => this.cardSelected(index)}><Card id={"#card_ + {index}"} key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who} isClicked={this.state.deck[index]==this.state.cardSelected} index={index}/></div>
+                    return <div className={styles.card} onClick={() => this.cardSelected(index)}><Card id={"#card_ + {index}"} key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who} isClicked={this.state.deck[index] == this.state.cardSelected} index={index} /></div>;
                 })}
             </div>
+
         );
     }
 }

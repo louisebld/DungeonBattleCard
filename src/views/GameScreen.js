@@ -5,6 +5,7 @@ import GameGrid from '../components/GameGrid'
 import Deck from '../components/Deck'
 import DeckAdversaire from '../components/DeckAdversaire'
 import generateCard from '../functions/generateCard';
+import { v4 as uuidv4, v4 } from 'uuid';
 
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../firebase.js';
@@ -14,13 +15,39 @@ import { collection, getDocs } from "firebase/firestore";
 // const [win, setWin] = useState(false);
 
 
+async function generateCards(player){
 
-async function getCardFromDB(){
+    var cardsFromDb = [];
+    var card = {};
+    var listCards = [];
     const querySnapshot = await getDocs(collection(db, "cards"));
     querySnapshot.forEach((doc) => {
-        console.log(doc.id, " => ", doc.data());
-        console.log(doc.data().name);
+        cardsFromDb.push(doc.data());
     });
+    for (var i = 0; i < 4; i++){
+        // get all the data from the cards
+        var random = Math.floor(Math.random() * cardsFromDb.length);
+        // create a mix of the cards to create one cards
+        card = {
+            // index: uuidv4(),
+            name: cardsFromDb[random].name,
+            pv: cardsFromDb[random].pv,
+            attack: cardsFromDb[random].attack,
+            img: cardsFromDb[random].img,
+            who: player,
+        }
+        listCards.push(card);
+    }
+    return listCards;
+}
+
+async function getAllCardsFromDb(){
+    var cardsFromDb = [];
+    const querySnapshot = await getDocs(collection(db, "cards"));
+    querySnapshot.forEach((doc) => {
+        cardsFromDb.push(doc.data());
+    });
+    return cardsFromDb;
 }
 
 async function getCardFromDB2(id){
@@ -73,33 +100,13 @@ const sleep = ms => new Promise(
   );
 
 
-/*
-async function generateCard2(){
-    var cards = [];
-    var card = {};
-    const querySnapshot = await getDocs(collection(db, "cards"));
-    querySnapshot.forEach((doc) => {
-        cards.push(doc.data());
-        });
-    // console.log(cards);
-    var random = Math.floor(Math.random() * cards.length);
-        var card = {
-        name: cards[random].name,
-        pv: cards[random].pv,
-        attack: cards[random].attack,
-        img: cards[random].img,
-    }
-    return card;
-}
-*/
-
 export default class GameScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
             heart:0,
             heartEnemy: 0,
-            deck: generateDeck(),
+            deck: [],
             plateau: createEmptyPlateau(),
             cards: [],
             cardSelected: null,
@@ -108,25 +115,12 @@ export default class GameScreen extends Component {
         };
       };
 
-    // async componentWillMount() {
-    //     var cards = [];
-    //     var card = {};
-    //     const querySnapshot = await getDocs(collection(db, "cards"));
-    //     querySnapshot.forEach((doc) => {
-    //         cards.push(doc.data());
-    //         });
-    //     // console.log(cards);
-    //     var random = Math.floor(Math.random() * cards.length);
-    //         var card = {
-    //         name: cards[random].name,
-    //         pv: cards[random].pv,
-    //         attack: cards[random].attack,
-    //         img: cards[random].img,
-    //     }
-    //     this.setState({cards: cards});
-    //     console.log(this.state.cards);
-    //     return card;
-    // }
+      componentDidMount() {
+        generateCards("me").then( (listCards) => {
+                this.setState({deck: listCards});
+            }
+        )
+    }
 
     handleCallback = (childData) => {
         this.setState({heart: childData});
@@ -136,6 +130,7 @@ export default class GameScreen extends Component {
 
     computerPlaceCard(){
         var card = generateCard('computer');
+        console.log(card);
         var index = Math.floor(Math.random() * 3);
         var plateau = this.state.plateau;
         plateau[index][0] = card;
@@ -194,7 +189,7 @@ render() {
     return(
 		<div className={styles.main}>        
 			<DeckAdversaire/>
-			<GameGrid value={this.state.plateau} heart={this.state.heart} cardSelected={this.state.cardSelected} fromChild={this.handleCallback} played={this.state.played} emplacementTouche={this.state.emplacementTouche}/>
+			<GameGrid value={this.state.plateau} heart={this.state.heart} cardSelected={this.state.deck[this.state.cardSelected]} fromChild={this.handleCallback} played={this.state.played} emplacementTouche={this.state.emplacementTouche}/>
 
             <button className={styles.button} onClick={() => {this.finDuTour()}} type="button">Fin du tour</button>
 
@@ -202,7 +197,7 @@ render() {
             {/* <button onClick={() => {this.computerPlaceCard()}}>heart</button>
             <button onClick={() => {this.AvanceColonne1()}}>avance</button>
              */}
-            {/* <button onClick={() => {console.log(this.state.emplacementTouche)}}>card</button> */}
+            <button onClick={() => {console.log(this.state.cardSelected)}}>card</button>
 
 		</div>
 	)

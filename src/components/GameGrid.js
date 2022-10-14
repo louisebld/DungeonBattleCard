@@ -40,7 +40,7 @@ export default class GameGridV2 extends React.Component {
         for(var i = 1; i <=3; i++){
             if(i != event){
                 var btn = document.getElementById("btn_" + i);
-                console.log(btn);
+                // console.log(btn);
                 btn.style.visibility = "hidden";
             }
         }
@@ -60,22 +60,23 @@ export default class GameGridV2 extends React.Component {
     }
 
     pushCardPlateau = (index) => {
+        console.log(this.props.cardSelected);
         // console.log("yoyuyouy")
         if(!this.props.played) {
             // console.log("passe ici");
         if(this.props.cardSelected !== null){
             // console.log("passe ici aussi");
             if (this.state.heart != 0){
-                // console.log("weeeeesh")
                 // let plateau = this.state.plateau;
                 let plateau = this.props.value;
-                let card = this.props.cardSelected;            
+                let card = this.props.cardSelected;  
+                console.log(card);          
                 plateau[index][plateau[0].length-1] = card;
                 this.setState({plateau: plateau});
                 this.setState({cardSelected: null});
                 this.state.played = true;
+                console.log(this.state.plateau);
                 // this.setState({played: true});
-                // console.log("j'ai set que le truc est à true normalement wesh")
             }
         }
     }

@@ -104,13 +104,13 @@ export default class GameGridV2 extends React.Component {
                                 if(card.name){
                                     return <Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who}/>
                                 }else{
-                                    return <div onClick={() => this.pushCardPlateau(0)}><EmptyCard/></div>
+                                    return <div key={index} onClick={() => this.pushCardPlateau(0)}><EmptyCard/></div>
                                 }
                             }else{
                                 if(card.name){
                                     return <Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who}/>
                                 }else{
-                                    return <EmptyCard/>
+                                    return <EmptyCard key={index}/>
                                 }
                             }
                         })}
@@ -121,13 +121,13 @@ export default class GameGridV2 extends React.Component {
                                 if(card.name){
                                     return <Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who}/>
                                 }else{
-                                    return <div onClick={() => this.pushCardPlateau(1)}><EmptyCard/></div>
+                                    return <div key={index} onClick={() => this.pushCardPlateau(1)}><EmptyCard/></div>
                                 }
                             }else{
                                 if(card.name){
                                     return <Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who}/>
                                 }else{
-                                    return <EmptyCard/>
+                                    return <EmptyCard key={index}/>
                                 }
                             }
                         })}
@@ -138,13 +138,13 @@ export default class GameGridV2 extends React.Component {
                                 if(card.name){
                                     return <Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who}/>
                                 }else{
-                                    return <div onClick={() => this.pushCardPlateau(2)}><EmptyCard/></div>
+                                    return <div key={index} onClick={() => this.pushCardPlateau(2)}><EmptyCard/></div>
                                 }
                             }else{
                                 if(card.name){
                                     return <Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who}/>
                                 }else{
-                                    return <EmptyCard/>
+                                    return <EmptyCard key={index}/>
                                 }
                             }
                         })}

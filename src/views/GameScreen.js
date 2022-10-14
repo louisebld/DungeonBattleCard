@@ -12,6 +12,7 @@ import { getFirestore } from 'firebase/firestore/lite'
 import { collection, getDocs } from "firebase/firestore";
 // import Card from './Card';
 // const [win, setWin] = useState(false);
+const taille_colonne = 6;
 
 
 async function generateCards(player){
@@ -152,8 +153,7 @@ export default class GameScreen extends Component {
         var nouveauplateau = createEmptyPlateau();
         for(var i = 0; i < 3; i++){
             for(var j = 0; j < plateau[0].length; j++){
-                
-                var card = plateau[i][j];
+            
                 if(plateau[i][j].length != 0){
                     if (plateau[i][j].who == "computer")
                     {       
@@ -164,7 +164,6 @@ export default class GameScreen extends Component {
                         // console.log("position avant", i, j);
                         nouveauplateau[i][j-1] = plateau[i][j];
                     }
-                    // if two card a near, they fight
                 }
             }
         }
@@ -204,22 +203,23 @@ export default class GameScreen extends Component {
         console.log("card1 ", card1);
         console.log("card2 ", card2);
 
-        if (card1.attack > card2.pv){
-            console.log("card1 win");
-            plateau[i][j+1] = [];
-            card1.pv = card1.pv - card2.attack;
-            alert("L'ordi a tué une de tes cartes");
-        } else if (card2.attack > card1.pv){
-            console.log("card2 win");
-            plateau[i][j] = [];
-            card2.pv = card2.pv - card1.attack;
-            alert("Tu as tué une des cartes du computer");
-        } else if (card1.attack == card2.pv && card2.attack == card1.pv){
+        if (card1.attack == card2.pv && card2.attack == card1.pv){
             // si les deux cartes sont à égalité
             console.log("egalité");
             plateau[i][j] = [];
             plateau[i][j+1] = [];
             alert("Egalité");
+
+        } else if (card2.attack > card1.pv){
+            console.log("card2 win");
+            plateau[i][j] = [];
+            card2.pv = card2.pv - card1.attack;
+            alert("Tu as tué une des cartes du computer");
+        } else if (card1.attack > card2.pv){
+            console.log("card1 win");
+            plateau[i][j+1] = [];
+            card1.pv = card1.pv - card2.attack;
+            alert("L'ordi a tué une de tes cartes");
         } else {
             // les deux cartes sont touchées mais pas mortes
             console.log("les deux cartes sont touchées mais pas mortes");
@@ -236,10 +236,13 @@ export default class GameScreen extends Component {
                 if(plateau[i][j].length != 0){
                     if (plateau[i][j].who == "computer")
                     {
-                        console.log("detect card " + plateau[i][j].who);
-                        if (plateau[i][j+1].who == "me"){
-                            console.log("card proche");
-                            plateau = this.fightCard(plateau, i, j);
+                        // console.log("detect card " + plateau[i][j].who);
+                        // console.log("position après ", i, j);
+                        if (j+1 < taille_colonne){
+                            if (plateau[i][j+1].who == "me"){
+                                console.log("card proche");
+                                plateau = this.fightCard(plateau, i, j);
+                            }
                         }
                     }
                 }

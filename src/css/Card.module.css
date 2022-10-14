@@ -37,7 +37,7 @@
 } */
 
 .name_card{
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #fff;
     text-align: center;
     margin-top: 0.2rem;
@@ -53,32 +53,27 @@
     justify-content: space-between;
     flex-direction: row;
     align-items: center;
-    width: 100%;
+    width: 90%;
     height: 10%;
-    top: 0;
+    top:0;
     padding: 0.2rem;
-    margin-bottom: 1rem;
-
+    font-size:0.8rem;
+    padding:5px;
     /* margin-left: 1.5rem;
     margin-right: 1.5rem; */
 }
 
-
 .pv_card{
+    width:15px;
+    text-align: center;
     background-color : red;
-    padding: 0.2rem;
-    margin: 0.2rem;
-    margin-bottom: 1rem;
     border-radius: 20%;
-    margin-left: 1.3rem;
 }
 
 .force_card{
+    width:15px;
+    text-align: center;
     background-color: orange;
-    padding: 0.2rem;
-    margin: 0.2rem;
-    margin-right: 1.3rem;
-    margin-bottom: 1rem;
     border-radius: 20%;
 }
 

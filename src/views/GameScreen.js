@@ -103,6 +103,7 @@ export default class GameScreen extends Component {
         this.setState({heart: childData});
         this.setState({cardSelected: childData});
 
+        console.log(childData);
         if(childData !== "-1"){
             var card = document.getElementById("#card" + childData);
             card.style.height='100px';
@@ -113,7 +114,7 @@ export default class GameScreen extends Component {
         {
             if (i != childData){
                 var card = document.getElementById("#card" + i);
-                card.style.height='50px';
+                card.style.height='60px';
             }
         }
     };
@@ -121,6 +122,8 @@ export default class GameScreen extends Component {
     handleCallbackPlayed = (childData) => {
         this.setState({played: childData});
         this.state.deck[this.state.cardSelected] = this.generateCard("me");       
+        var button = document.getElementById("buttonFinDuTour");
+        button.style.backgroundColor ="yellow";
     }
 
     generateCard(player){
@@ -180,6 +183,9 @@ export default class GameScreen extends Component {
         // console.log(plateau);
         // console.log(nouveauplateau);
         this.setState({plateau: nouveauplateau});
+        var button = document.getElementById("buttonFinDuTour");
+        button.style.backgroundColor ="#465362";
+
     }
 
     async finDuTour(){
@@ -198,13 +204,13 @@ render() {
 			<DeckAdversaire/>
 			<GameGrid value={this.state.plateau} heart={this.state.heart} cardSelected={this.state.deck[this.state.cardSelected]} fromChild={this.handleCallback} fromChildPlayed={this.handleCallbackPlayed} played={this.state.played} emplacementTouche={this.state.emplacementTouche}/>
 
-            <button className={styles.button} onClick={() => {this.finDuTour()}} type="button">Fin du tour</button>
+            <button className={styles.button} id="buttonFinDuTour" onClick={() => {this.finDuTour()}} type="button">Fin du tour</button>
 
             <Deck value={this.state.deck} fromChildCard={this.handleCallback}/>
             {/* <button onClick={() => {this.computerPlaceCard()}}>heart</button>
             <button onClick={() => {this.AvanceColonne1()}}>avance</button>
              */}
-            <button onClick={() => {console.log(this.state.played)}}>card</button>
+            {/* <button onClick={() => {console.log(this.state.played)}}>card</button> */}
 
 		</div>
 	)

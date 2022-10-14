@@ -30,7 +30,7 @@ export default class GameGridV2 extends React.Component {
     };
 
     sendHasPlayed(value){
-        this.props.fromChild(value);
+        this.props.fromChildPlayed(value);
     }
 
     

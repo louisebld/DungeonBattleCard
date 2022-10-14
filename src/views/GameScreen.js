@@ -80,7 +80,7 @@ export default class GameScreen extends Component {
             deck: [],
             plateau: createEmptyPlateau(),
             cards: [],
-            cardSelected: null,
+            cardSelected: -1,
             played:false,
             emplacementTouche : [false, false, false],
         };
@@ -102,12 +102,12 @@ export default class GameScreen extends Component {
     handleCallback = (childData) => {
         this.setState({heart: childData});
         this.setState({cardSelected: childData});
-        this.setState({played: childData});
 
-        if(childData != "-1"){
+        if(childData !== "-1"){
             var card = document.getElementById("#card" + childData);
             card.style.height='100px';
-        }
+        }  
+
         // card.style.width='100px';
         for(var i = 0; i < 4; i++)
         {
@@ -117,6 +117,11 @@ export default class GameScreen extends Component {
             }
         }
     };
+
+    handleCallbackPlayed = (childData) => {
+        this.setState({played: childData});
+        this.state.deck[this.state.cardSelected] = this.generateCard("me");       
+    }
 
     generateCard(player){
         var randomcard = this.state.cards[Math.floor(Math.random() * this.state.cards.length)];
@@ -191,7 +196,7 @@ render() {
     return(
 		<div className={styles.main}>        
 			<DeckAdversaire/>
-			<GameGrid value={this.state.plateau} heart={this.state.heart} cardSelected={this.state.deck[this.state.cardSelected]} fromChild={this.handleCallback} played={this.state.played} emplacementTouche={this.state.emplacementTouche}/>
+			<GameGrid value={this.state.plateau} heart={this.state.heart} cardSelected={this.state.deck[this.state.cardSelected]} fromChild={this.handleCallback} fromChildPlayed={this.handleCallbackPlayed} played={this.state.played} emplacementTouche={this.state.emplacementTouche}/>
 
             <button className={styles.button} onClick={() => {this.finDuTour()}} type="button">Fin du tour</button>
 

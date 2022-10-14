@@ -36,7 +36,6 @@ export default class Deck extends React.Component {
     cardSelected(index){
         this.setState({cardSelected: this.state.deck[index]});
         this.sendCardSelected(index);
-        console.log("bonjour")
         var card = document.getElementById("#card" + index);
         console.log(card);
         if (card !== null) {

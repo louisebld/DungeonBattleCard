@@ -78,7 +78,7 @@ export default class GameGridV2 extends React.Component {
                 this.sendCardSelected("-1");
                 this.sendHasPlayed(true);	
                 this.state.played = true;
-                console.log(this.state.plateau);
+                // console.log(this.state.plateau);
                 // this.setState({played: true});
             }
         }

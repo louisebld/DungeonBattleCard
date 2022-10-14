@@ -27,8 +27,11 @@ export default class GameGridV2 extends React.Component {
 
     sendCardSelected(nb){
         this.props.fromChild(nb);
-      };
+    };
 
+    sendHasPlayed(value){
+        this.props.fromChild(value);
+    }
 
     
     ButtonEnemyHeart(nb){
@@ -80,6 +83,7 @@ export default class GameGridV2 extends React.Component {
                 plateau[index][plateau[0].length-1] = card;
                 this.setState({plateau: plateau});
                 this.sendCardSelected("-1");
+                this.sendHasPlayed(true);	
                 this.state.played = true;
                 console.log(this.state.plateau);
                 // this.setState({played: true});
@@ -115,10 +119,8 @@ export default class GameGridV2 extends React.Component {
                                 }
                             }
                         })}
-
                     </div>
                     <div className={styles.column}>
-
                         {this.props.value[1].map((card, index) => {
                             if(index === this.props.value[0].length -1){
                                 if(card.name){

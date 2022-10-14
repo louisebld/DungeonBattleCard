@@ -101,8 +101,8 @@ export default class GameScreen extends Component {
 
     handleCallback = (childData) => {
         this.setState({heart: childData});
-        // this.setState({played: childData});
         this.setState({cardSelected: childData});
+        this.setState({played: childData});
 
         if(childData != "-1"){
             var card = document.getElementById("#card" + childData);
@@ -199,7 +199,7 @@ render() {
             {/* <button onClick={() => {this.computerPlaceCard()}}>heart</button>
             <button onClick={() => {this.AvanceColonne1()}}>avance</button>
              */}
-            <button onClick={() => {console.log(this.state.cardSelected)}}>card</button>
+            <button onClick={() => {console.log(this.state.played)}}>card</button>
 
 		</div>
 	)

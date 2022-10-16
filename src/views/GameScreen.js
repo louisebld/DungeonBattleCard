@@ -108,6 +108,7 @@ export default class GameScreen extends Component {
         if(childData !== "-1"){
             var card = document.getElementById("#card" + childData);
             card.style.height='100px';
+            card.style.width='60px';
         }  
 
         // card.style.width='100px';
@@ -115,7 +116,8 @@ export default class GameScreen extends Component {
         {
             if (i != childData){
                 var card = document.getElementById("#card" + i);
-                card.style.height='60px';
+                card.style.height='80px';
+                card.style.width='50px';
             }
         }
     };

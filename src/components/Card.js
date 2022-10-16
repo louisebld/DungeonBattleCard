@@ -8,6 +8,16 @@ export default class Card extends React.Component {
     Card(){
     
     }
+
+    componentDidMount() {
+        if(this.props.deck){
+            var card = document.getElementById("#card" + this.props.index);
+            // console.log(card);
+            if (card !== null) {
+                card.style.height='80px';
+            }
+        }
+    }
     
     render() {
 

@@ -29,7 +29,7 @@ export default class Card extends React.Component {
                         <p className={styles.force_card}>{this.props.attack}</p>
                     </div>
     
-                    <img src={require(`../assets/png/${this.props.img}`)} className={styles.img_card} alt="img"/>
+                    <img src={require(`../assets/monsters/${this.props.img}`)} className={styles.img_card} alt="img"/>
                     <p className={styles.name_card}>{this.props.name}</p>
 
                 </div>
@@ -43,7 +43,7 @@ export default class Card extends React.Component {
                         <p className={styles.force_card}>{this.props.attack}</p>
                     </div>
 
-                    <img src={require(`../assets/png/${this.props.img}`)} className={styles.img_card} alt="img"/>
+                    <img src={require(`../assets/monsters/${this.props.img}`)} className={styles.img_card} alt="img"/>
                     <p className={styles.name_card}>{this.props.name}</p>
                 </div>
                 

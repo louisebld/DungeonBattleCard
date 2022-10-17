@@ -26,6 +26,13 @@ export default class GameGridV2 extends React.Component {
         this.props.fromChildPlayed(value);
     }
 
+    sendHeartEnemy(value){
+        this.props.fromChildHeartEnemy(value);
+    }
+
+    sendEmplacementTouche(value){
+        this.props.fromChildEmplacementTouche(value);
+    }
     
     ButtonEnemyHeart(nb){
         if(this.props.emplacementTouche[nb-1] == true){
@@ -58,23 +65,22 @@ export default class GameGridV2 extends React.Component {
         // console.log("le base de l'ennemi se trouve en colonne : " + pos);
         this.state.heartEnemy = pos;
         this.setState({heartEnemy: pos})
+        this.sendHeartEnemy(pos);
         // add color to the right button
         document.querySelector("#enemy_" + pos).classList.add(styles.enemyBase);
         // console.log("le base de l'ennemi se trouve en colonne : " + pos);
     }
 
     pushCardPlateau = (index) => {
-        console.log(this.props.cardSelected);
         // console.log("yoyuyouy")
         if(!this.props.played) {
             // console.log("passe ici");
-        if(this.props.cardSelected !== null){
+        if(this.props.cardSelected !== undefined){
             // console.log("passe ici aussi");
             if (this.state.heart != 0){
                 // let plateau = this.state.plateau;
                 let plateau = this.props.value;
                 let card = this.props.cardSelected;  
-                console.log(card);          
                 plateau[index][plateau[0].length-1] = card;
                 this.setState({plateau: plateau});
                 this.sendCardSelected("-1");

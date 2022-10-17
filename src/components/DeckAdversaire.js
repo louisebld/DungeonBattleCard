@@ -6,10 +6,17 @@ export default class DeckAdversaire extends React.Component {
     render() {
         return (
             <div className={styles.container}>
-                <EmptyCard className={styles.card}/>
-                <EmptyCard className={styles.card}/>
-                <EmptyCard className={styles.card}/>
-                <EmptyCard className={styles.card}/>
+                <div className={styles.card2}>
+                </div>
+
+                <div className={styles.card2}>
+                </div>
+
+                <div className={styles.card2}>
+                </div>
+
+                <div className={styles.card2}>
+                </div>
             </div>
         );
     }

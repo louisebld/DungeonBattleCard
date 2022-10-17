@@ -25,10 +25,10 @@ export default class Card extends React.Component {
             return (
                 <div id={"#card" + this.props.index} className={styles.card} onClick={() => this.handleClick(this.props)}>
                     <div className={styles.infos_card}>
-                        <p className={styles.pv_card}>{this.props.pv}</p>
                         <p className={styles.force_card}>{this.props.attack}</p>
+                        <p className={styles.pv_card}>{this.props.pv}</p>
+
                     </div>
-    
                     <img src={require(`../assets/monsters/${this.props.img}`)} className={styles.img_card} alt="img"/>
                     <p className={styles.name_card}>{this.props.name}</p>
 
@@ -39,8 +39,8 @@ export default class Card extends React.Component {
             return (
                 <div className={styles.card_enemy}>
                     <div className={styles.infos_card}>
-                        <p className={styles.pv_card}>{this.props.pv}</p>
                         <p className={styles.force_card}>{this.props.attack}</p>
+                        <p className={styles.pv_card}>{this.props.pv}</p>
                     </div>
 
                     <img src={require(`../assets/monsters/${this.props.img}`)} className={styles.img_card} alt="img"/>

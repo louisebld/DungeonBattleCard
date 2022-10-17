@@ -129,6 +129,10 @@ export default class GameScreen extends Component {
         button.style.backgroundColor ="yellow";
     }
 
+    handleCallbackHeartEnemy = (childData) => {
+        this.setState({heartEnemy: childData});
+    }
+
     generateCard(player){
         var randomcard = this.state.cards[Math.floor(Math.random() * this.state.cards.length)];
         var card = {
@@ -155,16 +159,22 @@ export default class GameScreen extends Component {
         var nouveauplateau = createEmptyPlateau();
         for(var i = 0; i < 3; i++){
             for(var j = 0; j < plateau[0].length; j++){
-            
                 if(plateau[i][j].length != 0){
+
                     if (plateau[i][j].who == "computer")
                     {       
-                        nouveauplateau[i][j+1] = plateau[i][j];
-                        // console.log("detect card " + this.detecteCardProche(nouveauplateau));
+                        if (this.detecteIfItCanMove(plateau, i, j, "computer")){
+                            if(j+1<plateau[0].length){
+                                nouveauplateau[i][j+1] = plateau[i][j];
+                            // console.log("detect card " + this.detecteCardProche(nouveauplateau));
+                            }
+                        }
                     } else {
+                        if (this.detecteIfItCanMove(plateau, i, j, "me")){
+                            nouveauplateau[i][j-1] = plateau[i][j];
+                        }
                         // console.log("position après ", i, j);
                         // console.log("position avant", i, j);
-                        nouveauplateau[i][j-1] = plateau[i][j];
                     }
                 }
             }
@@ -181,8 +191,7 @@ export default class GameScreen extends Component {
         //     nouveauplateau = this.fightCard(nouveauplateau);
         // }
 
-        nouveauplateau = this.detecteCardProche(nouveauplateau)
-
+        
         for(var i = 0; i < 3; i++){
             if (nouveauplateau[i][0].who == "me"){
                 var emplacementTouche = [this.state.emplacementTouche[0], this.state.emplacementTouche[1], this.state.emplacementTouche[2]];
@@ -191,13 +200,42 @@ export default class GameScreen extends Component {
             }
         }
         this.detectWinner();
-
-
+        
+        
         // console.log(plateau);
+        nouveauplateau = this.detecteCardProche(nouveauplateau) 
         // console.log(nouveauplateau);
         this.setState({plateau: nouveauplateau});
         var button = document.getElementById("buttonFinDuTour");
         button.style.backgroundColor ="#465362";
+    }
+
+    detecteIfItCanMove (plateau, i, j, player){
+        // args : plateau, position de la carte, player == "me" || "computer"
+        // return : true si la carte peut bouger, false sinon
+        if (j == plateau[0].length - 1 && player == "computer"){
+            return true;
+        } else if (j == 0 && player == "me"){
+            return true;
+        } else if (player == "me"){
+            if (plateau[i][j-1].length > 0)
+                {
+                console.log("la carte ne peut pas bouger");
+                return false;
+            } else {
+                console.log("la carte peut bouger");
+                return true;
+            }
+        } else {
+            if (plateau[i][j+1].length > 0){
+                console.log("la carte ne peut pas bouger");
+                return false;
+            }
+            else {
+                console.log("la carte peut bouger");
+                return true;
+            }
+        }
     }
 
     fightCard(plateau, i, j){
@@ -206,7 +244,7 @@ export default class GameScreen extends Component {
         console.log("card1 ", card1);
         console.log("card2 ", card2);
 
-        if (card1.attack == card2.pv && card2.attack == card1.pv){
+        if (card1.attack >= card2.pv && card2.attack >= card1.pv){
             // si les deux cartes sont à égalité
             console.log("egalité");
             plateau[i][j] = [];
@@ -258,7 +296,7 @@ export default class GameScreen extends Component {
         console.log("emplacement touche : " + this.state.emplacementTouche);
         console.log("coeur enemie : " + this.state.heartEnemy);
         for (var i = 0; i < 3; i++){
-            if (this.state.emplacementTouche[this.heartEnemy] == true){
+            if (this.state.emplacementTouche[this.heartEnemy-1] == true){
                 alert("Tu as gagné");
                 return true;
             }
@@ -278,7 +316,7 @@ render() {
     return(
 		<div className={styles.main}>        
 			<DeckAdversaire/>
-			<GameGrid value={this.state.plateau} heart={this.state.heart} cardSelected={this.state.deck[this.state.cardSelected]} fromChild={this.handleCallback} fromChildPlayed={this.handleCallbackPlayed} played={this.state.played} emplacementTouche={this.state.emplacementTouche}/>
+			<GameGrid value={this.state.plateau} heart={this.state.heart} cardSelected={this.state.deck[this.state.cardSelected]} fromChild={this.handleCallback} fromChildPlayed={this.handleCallbackPlayed} fromChildHeartEnemy={this.handleCallbackHeartEnemy} played={this.state.played} emplacementTouche={this.state.emplacementTouche}/>
 
             <button className={styles.button} id="buttonFinDuTour" onClick={() => {this.finDuTour()}} type="button">Fin du tour</button>
 
@@ -286,7 +324,7 @@ render() {
             {/* <button onClick={() => {this.computerPlaceCard()}}>heart</button>
             <button onClick={() => {this.AvanceColonne1()}}>avance</button>
              */}
-            {/* <button onClick={() => {console.log(this.state.played)}}>card</button> */}
+            {/* <button onClick={() => {console.log(this.state.heartEnemy)}}>card</button> */}
 
 		</div>
 	)

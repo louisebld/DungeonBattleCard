@@ -18,6 +18,10 @@ export default class GameGridV2 extends React.Component {
         };
 }
 
+    componentDidMount() {
+        this.sendEmplacementTouche(this.state.emplacementTouche);
+    }
+
     sendCardSelected(nb){
         this.props.fromChild(nb);
     };

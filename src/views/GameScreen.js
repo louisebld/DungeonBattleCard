@@ -4,6 +4,7 @@ import styles from '../css/GameScreen.module.css';
 import GameGrid from '../components/GameGrid'
 import Deck from '../components/Deck'
 import DeckAdversaire from '../components/DeckAdversaire'
+import WinWindow from '../components/WinWindow';
 import { v4 as uuidv4, v4 } from 'uuid';
 
 import { doc, getDoc } from "firebase/firestore";
@@ -84,6 +85,7 @@ export default class GameScreen extends Component {
             cardSelected: -1,
             played:false,
             emplacementTouche : [false, false, false],
+            winner:0,
         };
       };
 
@@ -131,6 +133,10 @@ export default class GameScreen extends Component {
 
     handleCallbackHeartEnemy = (childData) => {
         this.setState({heartEnemy: childData});
+    }
+
+    handleCallbackEmplacementTouche = (childData) => {
+        this.setState({emplacementTouche: childData});
     }
 
     generateCard(player){
@@ -293,14 +299,12 @@ export default class GameScreen extends Component {
     }
 
     detectWinner(){
-        console.log("emplacement touche : " + this.state.emplacementTouche);
-        console.log("coeur enemie : " + this.state.heartEnemy);
-        for (var i = 0; i < 3; i++){
-            if (this.state.emplacementTouche[this.heartEnemy-1] == true){
-                alert("Tu as gagné");
-                return true;
-            }
+        if(this.state.emplacementTouche[this.state.heartEnemy-1]===true){
+            alert("Tu as gagné");
+            this.setState({winner: 1});
+            return true;
         }
+        // this.setState({winner: 2});
         return false
     }
 
@@ -316,8 +320,13 @@ render() {
     return(
 		<div className={styles.main}>        
 			<DeckAdversaire/>
-			<GameGrid value={this.state.plateau} heart={this.state.heart} cardSelected={this.state.deck[this.state.cardSelected]} fromChild={this.handleCallback} fromChildPlayed={this.handleCallbackPlayed} fromChildHeartEnemy={this.handleCallbackHeartEnemy} played={this.state.played} emplacementTouche={this.state.emplacementTouche}/>
-
+			{this.state.winner==0 ? 
+            <GameGrid value={this.state.plateau} heart={this.state.heart} cardSelected={this.state.deck[this.state.cardSelected]} fromChild={this.handleCallback} fromChildPlayed={this.handleCallbackPlayed} fromChildHeartEnemy={this.handleCallbackHeartEnemy} fromChildEmplacementTouche={this.handleCallbackEmplacementTouche} played={this.state.played} emplacementTouche={this.state.emplacementTouche}/>
+            :
+            <div className={styles.winner}>
+                <WinWindow winner={this.state.winner}/>
+            </div>
+            }
             <button className={styles.button} id="buttonFinDuTour" onClick={() => {this.finDuTour()}} type="button">Fin du tour</button>
 
             <Deck value={this.state.deck} fromChildCard={this.handleCallback}/>

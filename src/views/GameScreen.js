@@ -244,6 +244,21 @@ export default class GameScreen extends Component {
     }
 
     fightCard(plateau, i, j){
+        /**
+         * If the attack of card1 is greater than or equal to the pv of card2 and the attack of card2 is
+         * greater than or equal to the pv of card1, then both cards are removed from the board.
+         * 
+         * If the attack of card2 is greater than the pv of card1, then card1 is removed from the board.
+         * 
+         * If the attack of card1 is greater than the pv of card2, then card2 is removed from the board.
+         * 
+         * If none of the above conditions are met, then the pv of both cards is reduced by the attack of the
+         * other card.
+         * @param plateau - the game board
+         * @param i - the row number
+         * @param j - the column of the card you want to fight with
+         * @returns The plateau
+         */
         var card1 = plateau[i][j];
         var card2 = plateau[i][j+1];
         console.log("card1 ", card1);
@@ -271,30 +286,29 @@ export default class GameScreen extends Component {
             console.log("les deux cartes sont touchées mais pas mortes");
             card1.pv = card1.pv - card2.attack;
             card2.pv = card2.pv - card1.attack;
+            plateau[i][j] = card1;
+            plateau[i][j+1] = card2;
         }
         return plateau;
     }
 
-    detecteCardProche(plateau){
-        // check if two card are near for the next turn, if yes, they fight and return plateau
+    checkFight(plateau){
+        /**
+         * It checks if there are two cards in a row that are not from the same player, and if so, it calls the
+         * fightCard function.
+         * @param plateau - the game board
+         * @returns the plateau.
+         */
         for(var i = 0; i < 3; i++){
-            for(var j = 0; j < plateau[0].length; j++){
-                if(plateau[i][j].length != 0){
-                    if (plateau[i][j].who == "computer")
-                    {
-                        // console.log("detect card " + plateau[i][j].who);
-                        // console.log("position après ", i, j);
-                        if (j+1 < taille_colonne){
-                            if (plateau[i][j+1].who == "me"){
-                                console.log("card proche");
-                                plateau = this.fightCard(plateau, i, j);
-                            }
-                        }
+            for(var j = 0; j < plateau[0].length - 1; j++){
+                if(plateau[i][j].length != 0 && plateau[i][j+1].length != 0){
+                    if (plateau[i][j].who != plateau[i][j+1].who){
+                        plateau = this.fightCard(plateau, i, j);
+                        this.setState({plateau : plateau});
                     }
                 }
             }
         }
-        return plateau;
     }
 
     detectWinner(){
@@ -311,6 +325,8 @@ export default class GameScreen extends Component {
         this.computerPlaceCard();
         await sleep(1000);
         this.AvanceColonne1();
+
+        this.checkFight(this.state.plateau);
 
         this.detecteEmplacementTouche();
         this.detectWinner();

@@ -16,7 +16,7 @@ export default class GameGridV2 extends React.Component {
             played:this.props.played,
             emplacementTouche : this.props.emplacementTouche,
         };
-}
+    }
 
     componentDidMount() {
         this.sendEmplacementTouche(this.state.emplacementTouche);

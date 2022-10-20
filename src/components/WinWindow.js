@@ -15,7 +15,7 @@ export default class Card extends React.Component {
                 {this.props.winner==1 ? <h1 className={styles.text}>Tu as gagné ! Bravo !</h1>
                 : <h1 className={styles.text}>Tu as perdu ! Dommage !</h1>}
                     <div className={styles.link_menu}>
-                            <button type="button" onClick={window.location.reload()} className={styles.button}>
+                            <button type="button" onClick={() => window.location.reload()} className={styles.button}>
                                 Rejouer
                             </button>
                     </div>

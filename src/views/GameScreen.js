@@ -243,24 +243,25 @@ export default class GameScreen extends Component {
         }
     }
 
-    fightCard(plateau, i, j){
+    fightCard(plateau, i, j, k, l){
         /**
-         * If the attack of card1 is greater than or equal to the pv of card2 and the attack of card2 is
-         * greater than or equal to the pv of card1, then both cards are removed from the board.
+         * The function takes two cards and compares their attack and pv values. If the attack value of one
+         * card is greater than the pv value of the other card, the card with the lower pv value is removed
+         * from the game. If the attack value of both cards is greater than the pv value of the other card,
+         * both cards are removed from the game. If the attack value of both cards is less than the pv
+         * value of the other card, the pv value of both cards is reduced by the attack value of the other
+         * card.
          * 
-         * If the attack of card2 is greater than the pv of card1, then card1 is removed from the board.
-         * 
-         * If the attack of card1 is greater than the pv of card2, then card2 is removed from the board.
-         * 
-         * If none of the above conditions are met, then the pv of both cards is reduced by the attack of the
-         * other card.
+         * I'm not sure if this is the best way to do this, but it works.
          * @param plateau - the game board
-         * @param i - the row number
-         * @param j - the column of the card you want to fight with
-         * @returns The plateau
+         * @param i - the row of the first card
+         * @param j - the column of the card you want to attack with
+         * @param k - the row of the card you clicked on
+         * @param l - the line of the card you want to attack
+         * @returns the plateau.
          */
         var card1 = plateau[i][j];
-        var card2 = plateau[i][j+1];
+        var card2 = plateau[k][l];
         console.log("card1 ", card1);
         console.log("card2 ", card2);
 
@@ -268,7 +269,7 @@ export default class GameScreen extends Component {
             // si les deux cartes sont à égalité
             console.log("egalité");
             plateau[i][j] = [];
-            plateau[i][j+1] = [];
+            plateau[k][l] = [];
             alert("Egalité");
 
         } else if (card2.attack > card1.pv){
@@ -278,7 +279,7 @@ export default class GameScreen extends Component {
             alert("Tu as tué une des cartes du computer");
         } else if (card1.attack > card2.pv){
             console.log("card1 win");
-            plateau[i][j+1] = [];
+            plateau[k][l] = [];
             card1.pv = card1.pv - card2.attack;
             alert("L'ordi a tué une de tes cartes");
         } else {
@@ -287,7 +288,7 @@ export default class GameScreen extends Component {
             card1.pv = card1.pv - card2.attack;
             card2.pv = card2.pv - card1.attack;
             plateau[i][j] = card1;
-            plateau[i][j+1] = card2;
+            plateau[k][l] = card2;
         }
         return plateau;
     }
@@ -303,7 +304,27 @@ export default class GameScreen extends Component {
             for(var j = 0; j < plateau[0].length - 1; j++){
                 if(plateau[i][j].length != 0 && plateau[i][j+1].length != 0){
                     if (plateau[i][j].who != plateau[i][j+1].who){
-                        plateau = this.fightCard(plateau, i, j);
+                        plateau = this.fightCard(plateau, i, j, i, j+1);
+                        this.setState({plateau : plateau});
+                    }
+                }
+            }
+        }
+    }
+
+    checkFightButOneCaseBetweenThem(plateau){
+        /**
+         * It checks if there are two cards in a row that are not from the same player, with one case free between them, and if so, it calls the
+         * fightCard function.
+         * @param plateau - the game board
+         * @returns the plateau.
+         */
+        for(var i = 0; i < 3; i++){
+            for(var j = 0; j < plateau[0].length - 2; j++){
+                // check if there's no card in the middle, if so, fight
+                if(plateau[i][j].length != 0 && plateau[i][j+2].length != 0 && plateau[i][j+1].length == 0){
+                    if (plateau[i][j].who != plateau[i][j+2].who){
+                        plateau = this.fightCard(plateau, i, j, i, j+2);
                         this.setState({plateau : plateau});
                     }
                 }
@@ -327,6 +348,7 @@ export default class GameScreen extends Component {
         this.AvanceColonne1();
 
         this.checkFight(this.state.plateau);
+        this.checkFightButOneCaseBetweenThem(this.state.plateau);
 
         this.detecteEmplacementTouche();
         this.detectWinner();

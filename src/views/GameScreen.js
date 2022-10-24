@@ -304,16 +304,6 @@ export default class GameScreen extends Component {
             for(var j = 0; j < plateau[0].length - 1; j++){
                 if(plateau[i][j].length != 0 && plateau[i][j+1].length != 0){
                     if (plateau[i][j].who != plateau[i][j+1].who){
-                        // little animation to show that the cards are fighting
-                        var style = plateau[i][j].style
-                        plateau[i][j].style.transform = "translateY(50px)";
-                        plateau[i][j+1].style.transform = "translateY(50px)";
-                        console.log("style : " + plateau[i][j].style);
-                        // take of the animation
-                        setTimeout(function(i, j, plateau, style){
-                            plateau[i][j].style.transform = "translateY(-50px)";
-                            plateau[i][j+1].style.transform = "translateY(-50px)";
-                        }, 1000);
                         plateau = this.fightCard(plateau, i, j, i, j+1);
                         this.setState({plateau : plateau});
                     }

@@ -155,7 +155,7 @@ export default class GameScreen extends Component {
 
     computerPlaceCard(){
         var card = this.generateCard("computer");
-        console.log(card);
+        // console.log(card);
         var index = Math.floor(Math.random() * 3);
         var plateau = this.state.plateau;
         plateau[index][0] = card;
@@ -229,9 +229,9 @@ export default class GameScreen extends Component {
                 return true;
             }
         } else {
-            console.log("cas 4")
-            console.log(plateau[i][j+1]);
-            console.log(Object.keys(plateau[i][j+1]).length);
+            // console.log("cas 4")
+            // console.log(plateau[i][j+1]);
+            // console.log(Object.keys(plateau[i][j+1]).length);
             if (Object.keys(plateau[i][j+1]).length !== 0){
                 console.log("la carte ne peut pas bouger");
                 return false;
@@ -262,26 +262,25 @@ export default class GameScreen extends Component {
          */
         var card1 = plateau[i][j];
         var card2 = plateau[k][l];
-        console.log("card1 ", card1);
-        console.log("card2 ", card2);
+        // console.log("card1 ", card1);
+        // console.log("card2 ", card2);
 
         if (card1.attack >= card2.pv && card2.attack >= card1.pv){
             // si les deux cartes sont à égalité
             console.log("egalité");
             plateau[i][j] = [];
             plateau[k][l] = [];
-            alert("Egalité");
-
-        } else if (card2.attack > card1.pv){
+            console.log("Egalité");
+        } else if (card2.attack >= card1.pv){
             console.log("card2 win");
             plateau[i][j] = [];
             card2.pv = card2.pv - card1.attack;
-            alert("Tu as tué une des cartes du computer");
-        } else if (card1.attack > card2.pv){
+            console.log("Tu as tué une des cartes du computer");
+        } else if (card1.attack >= card2.pv){
             console.log("card1 win");
             plateau[k][l] = [];
             card1.pv = card1.pv - card2.attack;
-            alert("L'ordi a tué une de tes cartes");
+            console.log("L'ordi a tué une de tes cartes");
         } else {
             // les deux cartes sont touchées mais pas mortes
             console.log("les deux cartes sont touchées mais pas mortes");
@@ -305,6 +304,8 @@ export default class GameScreen extends Component {
                 if(plateau[i][j].length != 0 && plateau[i][j+1].length != 0){
                     if (plateau[i][j].who != plateau[i][j+1].who){
                         plateau = this.fightCard(plateau, i, j, i, j+1);
+
+                        console.log(document.querySelector("#card_"+i+"_"+j));
                         this.setState({plateau : plateau});
                     }
                 }

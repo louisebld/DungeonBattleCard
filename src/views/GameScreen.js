@@ -38,6 +38,7 @@ async function generateCards(player){
             attack: cardsFromDb[random].attack,
             img: cardsFromDb[random].img,
             who: player,
+            anim : false,
         }
         listCards.push(card);
     }
@@ -302,7 +303,7 @@ export default class GameScreen extends Component {
         return plateau;
     }
 
-    checkFight(plateau){
+    async checkFight(plateau){
         /**
          * It checks if there are two cards in a row that are not from the same player, and if so, it calls the
          * fightCard function.
@@ -314,8 +315,14 @@ export default class GameScreen extends Component {
                 if(plateau[i][j].length != 0 && plateau[i][j+1].length != 0){
                     if (plateau[i][j].who != plateau[i][j+1].who){
                         plateau = this.fightCard(plateau, i, j, i, j+1);
-
+                        plateau[i][j].anim = true;
+                        plateau[i][j+1].anim = true;
+                        console.log(plateau);
                         console.log(document.querySelector("#card_"+i+"_"+j));
+                        this.setState({plateau : plateau});
+                        await sleep(1000);
+                        plateau[i][j].anim = false;
+                        plateau[i][j+1].anim = false;
                         this.setState({plateau : plateau});
                     }
                 }
@@ -358,6 +365,18 @@ export default class GameScreen extends Component {
         }
         return false
     }
+    
+
+    // setFalseAnimCard() {
+    //     var plateau = this.state.plateau;
+    //     for(var i = 0; i < plateau.length; i++){
+    //         for(var j = 0; j < plateau[0].length; j++){
+    //             plateau[i][j].anim = false;
+    //         }
+    //     }
+    //     // this.setState({plateau: plateau});
+    // }
+
 
     async finDuTour(){
         if (this.state.played == true){
@@ -379,12 +398,18 @@ export default class GameScreen extends Component {
         // var nouveauplateau = this.state.plateau;
         // nouveauplateau = this.detecteCardProche(nouveauplateau) 
 
-        // this.setState({plateau: nouveauplateau});
+        // the player can't play 2 times in a row
         this.setState({played: false});
 
+        // update button finDeTour
         var button = document.getElementById("buttonFinDuTour");
         button.style.backgroundColor ="#465362";   
+        button.style.backgroundColor ="#465362";
+
+        // the card don't anim anymore  
+        // this.setFalseAnimCard();
     }
+    
 
 
 render() {

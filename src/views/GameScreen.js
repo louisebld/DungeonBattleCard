@@ -174,6 +174,18 @@ export default class GameScreen extends Component {
                     {       
                         if (this.detecteIfItCanMove(plateau, i, j, "computer")){
                             if(j+1<plateau[0].length){
+
+
+                                if (j != 0 && plateau[i][j-1].who == "computer"){
+                                    // console.log("colision");
+                                    // console.log("ancienne case : " + plateau[i][j].name);
+                                    nouveauplateau[i][j] = plateau[i][j-1];
+                                    nouveauplateau[i][j-1] = [];
+                                    // console.log("nouvelle case : " + nouveauplateau[i][j].name)
+                                }
+                                
+                                
+                                
                                 nouveauplateau[i][j+1] = plateau[i][j];
                             }
                         }
@@ -208,7 +220,7 @@ export default class GameScreen extends Component {
     }
 
     detecteIfItCanMove (plateau, i, j, player){
-        console.log("la position de ma carte : ",i, j);
+        // console.log("la position de ma carte : ",i, j);
         // args : plateau, position de la carte, player == "me" || "computer"
         // return : true si la carte peut bouger, false sinon
         if (j == plateau[0].length - 1 && player == "computer"){
@@ -223,10 +235,11 @@ export default class GameScreen extends Component {
             // console.log((plateau[i][j-1]).length);
             if (Object.keys(plateau[i][j-1]).length !== 0)
                 {
-                console.log("la carte ne peut pas bouger");
+                // console.log("la carte ne peut pas bouger");
                 return false;
             } else {
-                console.log("la carte peut bouger");
+                /* Logging a message to the console. */
+                // console.log("la carte peut bouger");
                 return true;
             }
         } else {
@@ -234,11 +247,11 @@ export default class GameScreen extends Component {
             // console.log(plateau[i][j+1]);
             // console.log(Object.keys(plateau[i][j+1]).length);
             if (Object.keys(plateau[i][j+1]).length !== 0){
-                console.log("la carte ne peut pas bouger");
+                // console.log("la carte ne peut pas bouger");
                 return false;
             }
             else {
-                console.log("la carte peut bouger");
+                // console.log("la carte peut bouger");
                 return true;
             }
         }

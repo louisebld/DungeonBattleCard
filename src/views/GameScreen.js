@@ -175,7 +175,6 @@ export default class GameScreen extends Component {
                         if (this.detecteIfItCanMove(plateau, i, j, "computer")){
                             if(j+1<plateau[0].length){
 
-
                                 if (j != 0 && plateau[i][j-1].who == "computer"){
                                     // console.log("colision");
                                     // console.log("ancienne case : " + plateau[i][j].name);
@@ -183,9 +182,6 @@ export default class GameScreen extends Component {
                                     nouveauplateau[i][j-1] = [];
                                     // console.log("nouvelle case : " + nouveauplateau[i][j].name)
                                 }
-                                
-                                
-                                
                                 nouveauplateau[i][j+1] = plateau[i][j];
                             }
                         }
@@ -364,10 +360,17 @@ export default class GameScreen extends Component {
     }
 
     async finDuTour(){
-        this.computerPlaceCard();
-        await sleep(1000);
-        this.AvanceColonne1();
+        if (this.state.played == true){
+            this.computerPlaceCard();
+            await sleep(1000);
+            this.AvanceColonne1();
+            await sleep(1000);
+            this.joue();
+        }
 
+    }
+
+    async joue(){
         this.checkFight(this.state.plateau);
         this.checkFightButOneCaseBetweenThem(this.state.plateau);
 
@@ -380,8 +383,7 @@ export default class GameScreen extends Component {
         this.setState({played: false});
 
         var button = document.getElementById("buttonFinDuTour");
-        button.style.backgroundColor ="#465362";
-
+        button.style.backgroundColor ="#465362";   
     }
 
 
@@ -389,6 +391,8 @@ render() {
     return(
 		<div className={styles.main}>        
 			<DeckAdversaire/>
+            {/* <div class="bonjour"> bonjour </div> */}
+
 			{this.state.winner==0 ? 
             <GameGrid value={this.state.plateau} heart={this.state.heart} cardSelected={this.state.deck[this.state.cardSelected]} fromChild={this.handleCallback} fromChildPlayed={this.handleCallbackPlayed} fromChildHeartEnemy={this.handleCallbackHeartEnemy} fromChildEmplacementTouche={this.handleCallbackEmplacementTouche} fromChildHeart={this.handleCallbackHeart} played={this.state.played} emplacementTouche={this.state.emplacementTouche}/>
             :
@@ -397,13 +401,14 @@ render() {
             </div>
             }
             <button className={styles.button} id="buttonFinDuTour" onClick={() => {this.finDuTour()}} type="button">Fin du tour</button>
+            {/* <button className={styles.button} id="buttonJoue" onClick={() => {this.joue()}} type="button">Joue</button> */}
 
             <Deck value={this.state.deck} fromChildCard={this.handleCallback}/>
             {/* <CardTwo/> */}
             {/* <button onClick={() => {this.computerPlaceCard()}}>heart</button>
             <button onClick={() => {this.AvanceColonne1()}}>avance</button>
              */}
-            <button onClick={() => {console.log(this.state.heart)}}>card</button>
+            {/* <button onClick={() => {console.log(this.state.heart)}}>card</button> */}
 
 		</div>
 	)

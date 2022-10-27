@@ -18,7 +18,25 @@ export default class Card extends React.Component {
             }
         }
     }
-    
+
+    componentDidUpdate() {
+        if(this.props.anim){
+            var card = document.getElementById("#card" + this.props.index);
+            console.log(card);
+            card.style.transition = "transform 0.5s";
+            console.log("ANIMME");
+            // if (card !== null && this.props.who == "computer") {
+            //     card.style.transform = "translateY(20px)";
+            // }
+            if (card !== null && this.props.who == "me") {
+                card.style.transform = "translateY(-20px)";
+            }
+            // reset the position of the card
+            setTimeout(function() {
+                card.style.transform = "translateY(0px)";
+            }, 500);
+        }
+    }
     render() {
 
         if(this.props.who =="me"){

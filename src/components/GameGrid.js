@@ -116,13 +116,13 @@ export default class GameGridV2 extends React.Component {
                         {this.props.value[0].map((card, index) => {
                             if(index === this.props.value[0].length -1){
                                 if(card.name){
-                                    return <div id={"card_0_" + index} key={index}><Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who}/></div>
+                                    return <div id={"card_0_" + index} key={index}><Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who} anim={card.anim}/></div>
                                 }else{
                                     return <div key={index} onClick={() => this.pushCardPlateau(0)}><EmptyCard/></div>
                                 }
                             }else{
                                 if(card.name){
-                                    return <div id={"card_0_" + index} key={index}><Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who}/></div>
+                                    return <div id={"card_0_" + index} key={index}><Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who} anim={card.anim}/></div>
                                 }else{
                                     return <EmptyCard key={index}/>
                                 }
@@ -133,13 +133,13 @@ export default class GameGridV2 extends React.Component {
                         {this.props.value[1].map((card, index) => {
                             if(index === this.props.value[0].length -1){
                                 if(card.name){
-                                    return <div id={"card_1_" + index} key={index}><Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who}/></div>
+                                    return <div id={"card_1_" + index} key={index}><Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who} anim={card.anim}/></div>
                                 }else{
                                     return <div key={index} onClick={() => this.pushCardPlateau(1)}><EmptyCard/></div>
                                 }
                             }else{
                                 if(card.name){
-                                    return <div id={"card_1_" + index} key={index}><Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who}/></div>
+                                    return <div id={"card_1_" + index} key={index}><Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who} anim={card.anim}/></div>
                                 }else{
                                     return <EmptyCard key={index}/>
                                 }
@@ -150,13 +150,13 @@ export default class GameGridV2 extends React.Component {
                         {this.props.value[2].map((card, index) => {
                             if(index === this.props.value[0].length -1){
                                 if(card.name){
-                                    return <div id={"card_2_" + index} key={index}><Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who}/></div>
+                                    return <div id={"card_2_" + index} key={index}><Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who} anim={card.anim}/></div>
                                 }else{
                                     return <div key={index} onClick={() => this.pushCardPlateau(2)}><EmptyCard/></div>
                                 }
                             }else{
                                 if(card.name){
-                                    return <div id={"card_2_" + index} key={index}><Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who}/></div>
+                                    return <div id={"card_2_" + index} key={index}><Card key={index} name={card.name} pv={card.pv} attack={card.attack} img={card.img} who={card.who} anim={card.anim}/></div>
                                 }else{
                                     return <EmptyCard key={index}/>
                                 }

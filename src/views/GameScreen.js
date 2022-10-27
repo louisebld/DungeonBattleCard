@@ -105,7 +105,6 @@ export default class GameScreen extends Component {
 
 
     handleCallback = (childData) => {
-        this.setState({heart: childData});
         this.setState({cardSelected: childData});
 
         console.log(childData);
@@ -114,8 +113,6 @@ export default class GameScreen extends Component {
             card.style.height='100px';
             card.style.width='60px';
         }  
-
-        // card.style.width='100px';
         for(var i = 0; i < 4; i++)
         {
             if (i != childData){
@@ -135,6 +132,10 @@ export default class GameScreen extends Component {
 
     handleCallbackHeartEnemy = (childData) => {
         this.setState({heartEnemy: childData});
+    }
+
+    handleCallbackHeart = (childData) => {
+        this.setState({heart : childData});
     }
 
     handleCallbackEmplacementTouche = (childData) => {
@@ -335,11 +336,17 @@ export default class GameScreen extends Component {
 
     detectWinner(){
         if(this.state.emplacementTouche[this.state.heartEnemy-1]===true){
-            alert("Tu as gagné");
+            // alert("Tu as gagné");
             this.setState({winner: 1});
             return true;
         }
-        // this.setState({winner: 2});
+
+        var card = this.state.plateau[this.state.heart-1][this.state.plateau[0].length-1];
+        if(card.length != 0 && card.who == "computer"){
+            // alert("L'ordinateur a gagné")
+            this.setState({winner: 2});
+            return true;
+        }
         return false
     }
 
@@ -370,7 +377,7 @@ render() {
 		<div className={styles.main}>        
 			<DeckAdversaire/>
 			{this.state.winner==0 ? 
-            <GameGrid value={this.state.plateau} heart={this.state.heart} cardSelected={this.state.deck[this.state.cardSelected]} fromChild={this.handleCallback} fromChildPlayed={this.handleCallbackPlayed} fromChildHeartEnemy={this.handleCallbackHeartEnemy} fromChildEmplacementTouche={this.handleCallbackEmplacementTouche} played={this.state.played} emplacementTouche={this.state.emplacementTouche}/>
+            <GameGrid value={this.state.plateau} heart={this.state.heart} cardSelected={this.state.deck[this.state.cardSelected]} fromChild={this.handleCallback} fromChildPlayed={this.handleCallbackPlayed} fromChildHeartEnemy={this.handleCallbackHeartEnemy} fromChildEmplacementTouche={this.handleCallbackEmplacementTouche} fromChildHeart={this.handleCallbackHeart} played={this.state.played} emplacementTouche={this.state.emplacementTouche}/>
             :
             <div className={styles.winner}>
                 <WinWindow winner={this.state.winner}/>
@@ -383,7 +390,7 @@ render() {
             {/* <button onClick={() => {this.computerPlaceCard()}}>heart</button>
             <button onClick={() => {this.AvanceColonne1()}}>avance</button>
              */}
-            {/* <button onClick={() => {console.log(this.state.heartEnemy)}}>card</button> */}
+            <button onClick={() => {console.log(this.state.heart)}}>card</button>
 
 		</div>
 	)

@@ -34,6 +34,10 @@ export default class GameGridV2 extends React.Component {
         this.props.fromChildHeartEnemy(value);
     }
 
+    sendHeart(value){
+        this.props.fromChildHeart(value);
+    }
+
     sendEmplacementTouche(value){
         this.props.fromChildEmplacementTouche(value);
     }
@@ -63,7 +67,7 @@ export default class GameGridV2 extends React.Component {
         document.querySelector("#base_heart").style.display = "flex";
         this.state.heart = event;
         this.setState({heart: event})
-
+        this.sendHeart(event)
         // Create enemy base
         var pos = Math.floor(Math.random() * 3) + 1;
         // console.log("le base de l'ennemi se trouve en colonne : " + pos);

@@ -175,10 +175,8 @@ export default class GameScreen extends Component {
                     {       
                         if (this.detecteIfItCanMove(plateau, i, j, "computer")){
                             if(j+1<plateau[0].length){
-
+                                // if theretwo bot's card next to each other
                                 if (j != 0 && plateau[i][j-1].who == "computer"){
-                                    // console.log("colision");
-                                    // console.log("ancienne case : " + plateau[i][j].name);
                                     nouveauplateau[i][j] = plateau[i][j-1];
                                     nouveauplateau[i][j-1] = [];
                                     // console.log("nouvelle case : " + nouveauplateau[i][j].name)
@@ -194,7 +192,14 @@ export default class GameScreen extends Component {
                             nouveauplateau[i][j-1] = plateau[i][j];
                         }
                         else {
-                            nouveauplateau[i][j] = plateau[i][j];
+                            // if there's two player's cards next to each other 
+                            if (j != 0 && plateau[i][j-1].who == "me"){
+                                console.log("la");
+                                nouveauplateau[i][j-1] = plateau[i][j];
+                                nouveauplateau[i][j] = [];
+                            } else {
+                                nouveauplateau[i][j] = plateau[i][j];
+                            }
                         }
                     }
                 }

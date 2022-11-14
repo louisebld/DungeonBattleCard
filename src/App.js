@@ -11,7 +11,7 @@ class App extends Component {
 		// <Router>
 		<div className="main">
 			<BrowserRouter>
-				<div className="container">
+				<div className="container" style={container}>
 					<Routes>
 						<Route path="/" element={<HomeScreen />} />
 						<Route path="/game" element={<GameScreen />} />
@@ -23,5 +23,13 @@ class App extends Component {
   }
 }
 
+const container = {
+	// backgroundColor: "grey",
+	// display: "flex",
+	// justifyContent: "center",
+	// alignItems: "center",
+	// height: "100%",
+	// height: "100vh",
+}
 
 export default App;

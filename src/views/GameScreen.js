@@ -15,6 +15,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { wait } from '@testing-library/user-event/dist/utils';
 // import Card from './Card';
 // const [win, setWin] = useState(false);
+const taille_colonne = 6;
 
 
 async function generateCards(player){
@@ -169,6 +170,7 @@ export default class GameScreen extends Component {
         for(var i = 0; i < 3; i++){
             for(var j = 0; j < plateau[0].length; j++){
                 if(plateau[i][j].length != 0){
+
                     if (plateau[i][j].who == "computer")
                     {       
                         if (this.detecteIfItCanMove(plateau, i, j, "computer")){
@@ -203,13 +205,10 @@ export default class GameScreen extends Component {
                 }
             }
         }
-        console.log(nouveauplateau);
+
         this.setState({plateau: nouveauplateau});
         await sleep(2000);
     }
-
-
-
 
     detecteEmplacementTouche(){
         var nouveauplateau = this.state.plateau;
@@ -234,13 +233,21 @@ export default class GameScreen extends Component {
             return true;
         } else if (player == "me"){
             console.log("cas 3")
+            // console.log(plateau[i][j-1]);
+            // console.log((plateau[i][j-1]).length);
             if (Object.keys(plateau[i][j-1]).length !== 0)
                 {
+                // console.log("la carte ne peut pas bouger");
                 return false;
-            } else { 
+            } else {
+                /* Logging a message to the console. */
+                // console.log("la carte peut bouger");
                 return true;
             }
         } else {
+            // console.log("cas 4")
+            // console.log(plateau[i][j+1]);
+            // console.log(Object.keys(plateau[i][j+1]).length);
             if (Object.keys(plateau[i][j+1]).length !== 0){
                 // console.log("la carte ne peut pas bouger");
                 return false;
@@ -315,7 +322,7 @@ export default class GameScreen extends Component {
                         plateau = this.fightCard(plateau, i, j, i, j+1);
                         plateau[i][j].anim = true;
                         plateau[i][j+1].anim = true;
-                        // console.log(plateau);
+                        console.log(plateau);
                         console.log(document.querySelector("#card_"+i+"_"+j));
                         this.setState({plateau : plateau});
                         await sleep(1000);
@@ -338,7 +345,7 @@ export default class GameScreen extends Component {
         for(var i = 0; i < 3; i++){
             for(var j = 0; j < plateau[0].length - 2; j++){
                 // check if there's no card in the middle, if so, fight
-                if(plateau[i][j].length != 0 && plateau[i][j+2].length != 0 && plateau[i][j+1] == []){
+                if(plateau[i][j].length != 0 && plateau[i][j+2].length != 0 && plateau[i][j+1].length == 0){
                     if (plateau[i][j].who != plateau[i][j+2].who){
                         plateau = this.fightCard(plateau, i, j, i, j+2);
                         this.setState({plateau : plateau});

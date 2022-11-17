@@ -158,7 +158,7 @@ export default class GameScreen extends Component {
     computerPlaceCard(){
         var card = this.generateCard("computer");
         // console.log(card);
-        var index = Math.floor(Math.random() * 3);
+        var index = Math.floor(Math.random() * 1);
         var plateau = this.state.plateau;
         plateau[index][0] = card;
         this.setState({plateau: plateau});
@@ -187,19 +187,24 @@ export default class GameScreen extends Component {
                         else {
                             nouveauplateau[i][j] = plateau[i][j];
                         }
+                    // ---- PLAYER ---- 
                     } else {
                         if (this.detecteIfItCanMove(plateau, i, j, "me")){
-                            nouveauplateau[i][j-1] = plateau[i][j];
-                        }
-                        else {
                             // if there's two player's cards next to each other 
                             if (j != 0 && plateau[i][j-1].who == "me"){
                                 console.log("la");
-                                nouveauplateau[i][j-1] = plateau[i][j];
-                                nouveauplateau[i][j] = [];
+                                
+                                // nouveauplateau[i][j-1] = plateau[i][j];
+                                nouveauplateau[i][j] = plateau[i][j-1];
+                                nouveauplateau[i][j-1] = [];
                             } else {
-                                nouveauplateau[i][j] = plateau[i][j];
+                                console.log("la2");
+                                nouveauplateau[i][j-1] = plateau[i][j];
                             }
+                        }
+                        else {
+                            console.log("la3");
+                            nouveauplateau[i][j] = plateau[i][j];    
                         }
                     }
                 }
@@ -234,26 +239,31 @@ export default class GameScreen extends Component {
         } else if (player == "me"){
             console.log("cas 3")
             // console.log(plateau[i][j-1]);
-            // console.log((plateau[i][j-1]).length);
-            if (Object.keys(plateau[i][j-1]).length !== 0)
-                {
-                // console.log("la carte ne peut pas bouger");
+            console.log("taille" + (plateau[i][j-1]).length);
+            if (((plateau[i][j-1]).length == 0) && (plateau[i][j-2].who == "computer")){
+                console.log(plateau[i][j], "la carte ne peut pas bouger car il y a un bot deux cases au dessus");
+                return false;
+            } else if ((plateau[i][j-1]).length != 0) {
+                /* Logging a message to the console. */
+                console.log(plateau[i][j], "la carte ne peut bouger car il n'y a rien au dessus");
                 return false;
             } else {
-                /* Logging a message to the console. */
-                // console.log("la carte peut bouger");
+                console.log(plateau[i][j], "la carte peut bouger car il n'y a rien au dessus ici");
                 return true;
             }
         } else {
-            // console.log("cas 4")
+            console.log("cas 4")
             // console.log(plateau[i][j+1]);
-            // console.log(Object.keys(plateau[i][j+1]).length);
-            if (Object.keys(plateau[i][j+1]).length !== 0){
-                // console.log("la carte ne peut pas bouger");
+            console.log("taille : ", plateau[i][j+1].length);
+            if (((plateau[i][j+1]).length == 0) && (plateau[i][j+2].who =="me")){
+                console.log(plateau[i][j], "le bot ne peut pas bouger car il y a un joueur deux cases au dessous");
+                return false;
+            }
+            else if ((plateau[i][j+1]).length != 0){
                 return false;
             }
             else {
-                // console.log("la carte peut bouger");
+                console.log(plateau[i][j], "le bot peut bouger");
                 return true;
             }
         }
@@ -342,6 +352,7 @@ export default class GameScreen extends Component {
          * @param plateau - the game board
          * @returns the plateau.
          */
+        console.log("checkfightbutonecasebetweenthem");
         for(var i = 0; i < 3; i++){
             for(var j = 0; j < plateau[0].length - 2; j++){
                 // check if there's no card in the middle, if so, fight
@@ -395,8 +406,9 @@ export default class GameScreen extends Component {
     }
 
     async joue(){
-        this.checkFight(this.state.plateau);
         this.checkFightButOneCaseBetweenThem(this.state.plateau);
+        this.checkFight(this.state.plateau);
+        await sleep(1000);
 
         this.detecteEmplacementTouche();
         this.detectWinner();

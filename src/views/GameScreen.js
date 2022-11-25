@@ -170,7 +170,7 @@ export default class GameScreen extends Component {
         for(var i = 0; i < 3; i++){
             for(var j = 0; j < plateau[0].length; j++){
                 if(plateau[i][j].length != 0){
-
+                    // ---- COMPUTER ----
                     if (plateau[i][j].who == "computer")
                     {       
                         if (this.detecteIfItCanMove(plateau, i, j, "computer")){
@@ -179,34 +179,28 @@ export default class GameScreen extends Component {
                                 if (j != 0 && plateau[i][j-1].who == "computer"){
                                     nouveauplateau[i][j] = plateau[i][j-1];
                                     nouveauplateau[i][j-1] = [];
-                                    // console.log("nouvelle case : " + nouveauplateau[i][j].name)
                                 }
                                 nouveauplateau[i][j+1] = plateau[i][j];
                             }
                         }
                         else {
+                            // ne bouge pas
                             nouveauplateau[i][j] = plateau[i][j];
                         }
                     // ---- PLAYER ---- 
                     } else {
-                        if (this.detecteIfItCanMove(plateau, i, j, "me")){
-                            // if there's two player's cards next to each other 
-
-                                console.log("si ca peut bouger");
-                                nouveauplateau[i][j-1] = plateau[i][j];
-                     
-                        } else if (j != 0 && plateau[i][j-1].who == "me" && this.estVide(plateau, i, j-2)){
-                                
-                                console.log("si 2 cartes a cote");
-                                
-                                nouveauplateau[i][j-1] = plateau[i][j];
-                                // nouveauplateau[i][j] = plateau[i][j-1];
-                                nouveauplateau[i][j] = [];
+                        if (this.detecteIfItCanMove(plateau, i, j, "computer")){
+                            if(j+1>0){
+                                // if theretwo player's cards next to each other
+                                if (j != 0 && plateau[i][j-1].who == "me"){
+                                    nouveauplateau[i][j-1] = plateau[i][j];
+                                    nouveauplateau[i][j-1] = [];
+                                }
+                            }
                         }
-
                         else {
-                            console.log("avance pas");
-                            nouveauplateau[i][j] = plateau[i][j];    
+                            // ne bouge pas
+                            nouveauplateau[i][j] = plateau[i][j];
                         }
                     }
                 }
@@ -229,49 +223,34 @@ export default class GameScreen extends Component {
     }
 
     detecteIfItCanMove (plateau, i, j, player){
-        // console.log("la position de ma carte : ",i, j);
-        // args : plateau, position de la carte, player == "me" || "computer"
-        // return : true si la carte peut bouger, false sinon
-        if (j == plateau[0].length - 1 && player == "computer"){
-            console.log("cas 1")
-            return true;
-        } else if (j == 0 && player == "me"){
-            console.log("cas 2")
-            return true;
-        } else if (player == "me"){
-            console.log("cas 3")
-            // (j != 0 && plateau[i][j-1].who == "me")
-            // console.log(plateau[i][j-1]);
-            console.log("qui est au dessus : " + this.estVide(plateau, i, j-1));
-            console.log("position : ", i, j-1);
-            if ((this.estVide(plateau, i, j-1)) && (plateau[i][j-2].who == "computer")){
-                console.log(plateau[i][j], "la carte ne peut pas bouger car il y a un bot deux cases au dessus");
-                return false;
-            } else if (!this.estVide(plateau, i, j-1)) {
-                /* Logging a message to the console. */
-                console.log("carte au dessus : ", plateau[i][j-1]);
-                console.log(plateau[i][j], "la carte ne peut bouger car il n'y a rien au dessus");
-                return false;
-            } else {
-                console.log(plateau[i][j], "la carte peut bouger car il n'y a rien au dessus ici");
+        if (player == "me"){
+            // Si je suis au bout du plateau c'est à dire sur la case tout en haut : j=0
+            if (j = 0){
                 return true;
+            }
+            // Si la case au dessus est vide
+            else if (this.estVide(plateau, i, j-1)){
+                // Si la case au dessus encore est le computer
+                if (this.estQui(plateau, i, j-2) == "computer"){
+                    return false;
+                // Si la case au dessus encore est le joueur ou vide
+                } else {
+                    return true;
+                }
+            // Si la case au dessus n'est pas vide
+            } else if (!this.estVide(plateau, i, j-1)){
+                return false;
+            // Si la case au dessus m'appartient pas
+            } else if (this.estQui(plateau, i, j-1) == "computer"){
+                return false;
+            // si la case au dessus m'appartient 
+            } else {
+
             }
         } else {
-            console.log("cas 4")
-            // console.log(plateau[i][j+1]);
-            // console.log("taille : ", plateau[i][j+1].length);
-            if (((plateau[i][j+1]).length == 0) && (plateau[i][j+2].who =="me")){
-                console.log(plateau[i][j], "le bot ne peut pas bouger car il y a un joueur deux cases au dessous");
-                return false;
-            }
-            else if ((plateau[i][j+1]).length != 0){
-                return false;
-            }
-            else {
-                console.log(plateau[i][j], "le bot peut bouger");
-                return true;
-            }
+
         }
+        return false;
     }
 
     estVide(plateau, i, j){
@@ -283,6 +262,22 @@ export default class GameScreen extends Component {
         else {
             return false;
         }
+    }
+
+    estQui(plateau, i, j, player){
+        /**
+         * If the player is the same as the player who owns the square, return true, otherwise return
+         * false.
+         * @param plateau - the game board
+         * @param i - the row
+         * @param j - the column
+         * @param player - the player who's turn it is - "me" or "computer"
+         * @returns a boolean value.
+         */
+        if (plateau[i][j].who == player){
+            return true;
+        }
+        return false;
     }
 
     fightCard(plateau, i, j, k, l){

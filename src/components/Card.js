@@ -22,9 +22,9 @@ export default class Card extends React.Component {
     componentDidUpdate() {
         if(this.props.anim){
             var card = document.getElementById("#card" + this.props.index);
-            console.log(card);
+            // console.log(card);
             card.style.transition = "transform 0.5s";
-            console.log("ANIMME");
+            // console.log("ANIMME");
             // if (card !== null && this.props.who == "computer") {
             //     card.style.transform = "translateY(20px)";
             // }

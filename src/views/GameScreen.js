@@ -174,23 +174,27 @@ export default class GameScreen extends Component {
                     if (plateau[i][j].who == "computer")
                     {       
                         if (this.detecteIfItCanMove(plateau, i, j, "computer")){
+                            // le computer peut bouger
                             console.log(plateau[i][j].name + ": computer can move");
                             nouveauplateau[i][j+1] = plateau[i][j];
                             nouveauplateau[i][j] = [];
                             
                         }
                         else {
+                            // le computer ne peut pas bouger
                             console.log(plateau[i][j].name + ": computer can't move");
                             nouveauplateau[i][j] = plateau[i][j];
                         }
                     // ---- PLAYER ---- 
                     } else {
                         if (this.detecteIfItCanMove(plateau, i, j, "me")){
+                            // le player peut bouger
                             console.log(plateau[i][j].name + ": player can move");
                             nouveauplateau[i][j-1] = plateau[i][j];
                             nouveauplateau[i][j] = [];
                         }
                         else {
+                            // le player ne peut pas bouger
                             console.log(plateau[i][j].name + ": player can't move");
                             nouveauplateau[i][j] = plateau[i][j];
                         }
@@ -291,50 +295,78 @@ export default class GameScreen extends Component {
                 }
             }
         } else {
-        //     console.log("passe in computer" + player)
-        //     // Si je suis au bout du plateau c'est à dire sur la case tout en haut : j=0
-        //     if (j == 0){
-        //         console.log("je suis au bout du plateau");
-        //         return true;
-        //     }
-        //     // Si la case au dessus est vide
-        //     else if (this.estVide(plateau, i, j+1)){
-        //         console.log("la case au dessus est vide");
-        //         // Si la case au dessus encore est le computer
-        //         if (this.estQui(plateau, i, j+2, "me")){
-        //             console.log("la case au dessus encore est le computer");
-        //             return false;
-        //         // Si la case au dessus encore est le joueur ou vide
-        //         } else {
-        //             console.log("la case au dessus encore est le joueur ou vide");
-        //             return true;
-        //         }
-        //     // Si la case au dessus n'est pas vide
-        //     } else if (!this.estVide(plateau, i, j+1)){
-        //         console.log("la case au dessus n'est pas vide");
-        //         return false;
-        //     // Si la case au dessus m'appartient pas
-        //     } else if (this.estQui(plateau, i, j+1), player){
-        //         console.log("la case au dessus m'appartient pas");
-        //         return false;
-        //     // si la case au dessus m'appartient 
-        //     } else {
-        //         // si la case encore au dessus est vide
-        //         if (this.estVideo(plateau, i, j+2)){
-        //             // la carte d'encore au dessus est au computer
-        //             if (this.estQui(plateau, i, j+3, player)){
-        //                 console.log("la carte d'encore au dessus est au computer");
-        //                 return false;
-        //             } else {
-        //                 console.log("la carte d'encore au dessus est au joueur");
-        //                 return true;
-        //             }
-        //         } else {
-        //             console.log("la case encore au dessus n'est pas vide");
-        //             return false;
-        //         }
-        //     }
-            return false;
+            console.log("passe in player" + player)
+            // Si je suis au bout du plateau c'est à dire sur la case tout en bas : j = plateau[0].length-1
+            if (j == plateau[0].length-1){
+                console.log("je suis au bout du plateau");
+                return true;
+            }
+            // Si la case en dessous est vide
+            else if (this.estVide(plateau, i, j+1)){
+                console.log("la case en dessous est vide");
+                // Si la case en dessous est le jour
+                if (this.estQui(plateau, i, j+2, "me")){
+                    console.log("la case au dessus encore est le joueur");
+                    return false;
+                // Si la case en dessous est le computer ou vide
+                } else {
+                    console.log("la case au dessus encore est le joueur ou vide");
+                    return true;
+                }
+            // Si la case au dessus n'est pas vide
+            } else if (!this.estVide(plateau, i, j+1)){
+                console.log("la case en dessous n'est pas vide");
+                if (plateau[i][j+1].who == "computer"){
+                    // tant que la case en dessous est le joueur 
+                    var k = j+1;
+                    while (plateau[i][k].who == "computer"){
+                        k++;
+                    }
+                    // Si la case en dessous encore est le joueur
+                    if (this.estQui(plateau, i, k+1, "me")){
+                        console.log("la case au dessus encore est le joueur");
+                        return false;
+                    } else if (this.estQui(plateau, i, k+1, "computer")){
+                        console.log("la case au dessus encore est le computer");
+                        return true;
+                    } else {
+                        console.log("la case en dessous encore est vide");
+                        if (k == plateau[0].length-1){
+                            return true;
+                        } else {
+                            if (this.estQui(plateau, i, k+1, "me")){
+                                return false;
+                            }
+                            else {
+                                return true;
+                            }
+                        }
+                    }
+                } else {
+                    console.log("la case en dessous est le joueur");
+                    return false;
+                }
+            // Si la case en dessous m'appartient pas
+            } else if (this.estQui(plateau, i, j+1, player)){
+                console.log("la case en dessous m'appartient pas");
+                return false;
+            // si la case en dessous m'appartient 
+            } else {
+                // si la case encore en dessous est vide
+                if (this.estVideo(plateau, i, j+2)){
+                    // la carte d'encore en dessous est au joueur
+                    if (this.estQui(plateau, i, j+3, player)){
+                        console.log("la carte d'encore en dessous est au joueur");
+                        return false;
+                    } else {
+                        console.log("la carte d'encore au dessus est au computer");
+                        return true;
+                    }
+                } else {
+                    console.log("la case encore en dessous n'est pas vide");
+                    return false;
+                }
+            }
         }
     }
 

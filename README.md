@@ -5,11 +5,12 @@ J’en profite pour vous annoncer que lors du rendu: une démo est attendue (je 
 
 En termes de rendu, il faudra:
 	 un petit compte-rendu: 
-        - expliquant l’appli, ✅
+        - expliquant l’appli (but du jeu + deroulement )✅
         - les fonctionnalités, 
-        - les choix (techno ✅/ implementation), 
+        - les choix (techno ✅ (pk react / implementation), 
         - l’architecture
-        - les problèmes rencontrés ✅
+        - les problèmes rencontrés (organisation, recuperation des donnees
+            , et ce con de Avance1 )✅
         - les améliorations/évolutions possibles. 
         - Il faudra aussi me fournir un mode d’installation ✅
 

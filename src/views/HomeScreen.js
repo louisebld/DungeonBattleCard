@@ -15,7 +15,7 @@ export default function HomeScreen (){
                                 Jouer
                             </button>
                         </Link>
-                        <Link to="/">
+                        <Link to="/rules">
                             <button type="button" className={styles.button}>
                                 Règles
                             </button>

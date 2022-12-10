@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from '../css/WinWindow.module.css';
-import {Link} from "react-router-dom";
 import happymonster from '../assets/png/happy.png';
 import sadmonster from '../assets/png/sad.png';
 

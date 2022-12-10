@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from '../css/CardTwo.module.css';
-import Card from '../components/Card';
 export default class CardTwo extends React.Component {
 
     

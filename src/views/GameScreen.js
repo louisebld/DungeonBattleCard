@@ -1,25 +1,16 @@
 import React, { Component } from 'react';
-import { useState, useEffect } from "react";
 import styles from '../css/GameScreen.module.css';
 import GameGrid from '../components/GameGrid'
 import Deck from '../components/Deck'
 import DeckAdversaire from '../components/DeckAdversaire'
 import WinWindow from '../components/WinWindow';
-import CardTwo from '../components/CardTwo';
-import { v4 as uuidv4, v4 } from 'uuid';
 
-import { doc, getDoc } from "firebase/firestore";
 import { db } from '../firebase.js';
-import { getFirestore } from 'firebase/firestore/lite'
-import { collection, getDocs } from "firebase/firestore";
-import { wait } from '@testing-library/user-event/dist/utils';
-// import Card from './Card';
-// const [win, setWin] = useState(false);
-const taille_colonne = 6;
+import { collection, getDocs } from "firebase/firestore";;
 
 
 async function generateCards(player){
-
+    // get all the cards from the database
     var cardsFromDb = [];
     var card = {};
     var listCards = [];
@@ -46,6 +37,7 @@ async function generateCards(player){
 }
 
 async function getAllCardsFromDb(){
+    // get all the cards from the database
     var cardsFromDb = [];
     const querySnapshot = await getDocs(collection(db, "cards"));
     querySnapshot.forEach((doc) => {
@@ -56,6 +48,7 @@ async function getAllCardsFromDb(){
 
 
 function createEmptyPlateau(){
+    // create an empty plateau
     var plateau = [];
     for(var i = 0; i < 3; i++){
         plateau.push([[], [], [], [], [], []]);
@@ -93,12 +86,14 @@ export default class GameScreen extends Component {
       };
 
       componentDidMount() {
+        // when the component is loaded, we generate the cards
         generateCards("me").then( (listCards) => {
                 this.setState({deck: listCards});
             }
         );
 
         getAllCardsFromDb().then( (listCards) => {
+            // just after we get all the cards from the database
             this.setState({cards: listCards});
         }
         );
@@ -165,6 +160,7 @@ export default class GameScreen extends Component {
     }
 
     async AvanceColonne1(){
+        // Avance chaque carte de 1 case si possible
         var plateau = this.state.plateau;
         var nouveauplateau = createEmptyPlateau();
         for(var i = 0; i < 3; i++){
@@ -175,27 +171,27 @@ export default class GameScreen extends Component {
                     {       
                         if (this.detecteIfItCanMove(plateau, i, j, "computer")){
                             // le computer peut bouger
-                            console.log(plateau[i][j].name + ": computer can move");
+                            // console.log(plateau[i][j].name + ": computer can move");
                             nouveauplateau[i][j+1] = plateau[i][j];
                             nouveauplateau[i][j] = [];
                             
                         }
                         else {
                             // le computer ne peut pas bouger
-                            console.log(plateau[i][j].name + ": computer can't move");
+                            // console.log(plateau[i][j].name + ": computer can't move");
                             nouveauplateau[i][j] = plateau[i][j];
                         }
                     // ---- PLAYER ---- 
                     } else {
                         if (this.detecteIfItCanMove(plateau, i, j, "me")){
                             // le player peut bouger
-                            console.log(plateau[i][j].name + ": player can move");
+                            // console.log(plateau[i][j].name + ": player can move");
                             nouveauplateau[i][j-1] = plateau[i][j];
                             nouveauplateau[i][j] = [];
                         }
                         else {
                             // le player ne peut pas bouger
-                            console.log(plateau[i][j].name + ": player can't move");
+                            // console.log(plateau[i][j].name + ": player can't move");
                             nouveauplateau[i][j] = plateau[i][j];
                         }
                     }
@@ -208,6 +204,7 @@ export default class GameScreen extends Component {
     }
 
     detecteEmplacementTouche(){
+        // detecte si un emplacement est touché
         var nouveauplateau = this.state.plateau;
         for(var i = 0; i < 3; i++){
             if (nouveauplateau[i][0].who == "me"){
@@ -219,30 +216,31 @@ export default class GameScreen extends Component {
     }
 
     detecteIfItCanMove (plateau, i, j, player){
-        console.log(" " + i + " " + j);
-        console.log(plateau[i][j].who);
+        // Regarde si une carte peut bouger
+        // console.log(" " + i + " " + j);
+        // console.log(plateau[i][j].who);
         if (player == "me"){
-            console.log("passe in player" + player)
+            // console.log("passe in player" + player)
             // Si je suis au bout du plateau c'est à dire sur la case tout en haut : j=0
             if (j == 0){
-                console.log("je suis au bout du plateau");
+                // console.log("je suis au bout du plateau");
                 return true;
             }
             // Si la case au dessus est vide
             else if (this.estVide(plateau, i, j-1)){
-                console.log("la case au dessus est vide");
+                // console.log("la case au dessus est vide");
                 // Si la case au dessus encore est le computer
                 if (this.estQui(plateau, i, j-2, "computer")){
-                    console.log("la case au dessus encore est le computer");
+                    // console.log("la case au dessus encore est le computer");
                     return false;
                 // Si la case au dessus encore est le joueur ou vide
                 } else {
-                    console.log("la case au dessus encore est le joueur ou vide");
+                    // console.log("la case au dessus encore est le joueur ou vide");
                     return true;
                 }
             // Si la case au dessus n'est pas vide
             } else if (!this.estVide(plateau, i, j-1)){
-                console.log("la case au dessus n'est pas vide");
+                // console.log("la case au dessus n'est pas vide");
                 if (plateau[i][j-1].who == "me"){
                     // tant que la case au dessus est le joueur 
                     var k = j-1;
@@ -251,13 +249,13 @@ export default class GameScreen extends Component {
                     }
                     // Si la case au dessus encore est le computer
                     if (this.estQui(plateau, i, k-1, "computer")){
-                        console.log("la case au dessus encore est le computer");
+                        // console.log("la case au dessus encore est le computer");
                         return false;
                     } else if (this.estQui(plateau, i, k-1, "me")){
-                        console.log("la case au dessus encore est le joueur");
+                        // console.log("la case au dessus encore est le joueur");
                         return true;
                     } else {
-                        console.log("la case au dessus encore est vide");
+                        // console.log("la case au dessus encore est vide");
                         if (k == 0){
                             return true;
                         } else {
@@ -270,12 +268,12 @@ export default class GameScreen extends Component {
                         }
                     }
                 } else {
-                    console.log("la case au dessus est le computer");
+                    // console.log("la case au dessus est le computer");
                     return false;
                 }
             // Si la case au dessus m'appartient pas
             } else if (this.estQui(plateau, i, j-1), player){
-                console.log("la case au dessus m'appartient pas");
+                // console.log("la case au dessus m'appartient pas");
                 return false;
             // si la case au dessus m'appartient 
             } else {
@@ -283,39 +281,39 @@ export default class GameScreen extends Component {
                 if (this.estVideo(plateau, i, j-2)){
                     // la carte d'encore au dessus est au computer
                     if (this.estQui(plateau, i, j-3, player)){
-                        console.log("la carte d'encore au dessus est au computer");
+                        // console.log("la carte d'encore au dessus est au computer");
                         return false;
                     } else {
-                        console.log("la carte d'encore au dessus est au joueur");
+                        // console.log("la carte d'encore au dessus est au joueur");
                         return true;
                     }
                 } else {
-                    console.log("la case encore au dessus n'est pas vide");
+                    // console.log("la case encore au dessus n'est pas vide");
                     return false;
                 }
             }
         } else {
-            console.log("passe in player" + player)
+            // console.log("passe in player" + player)
             // Si je suis au bout du plateau c'est à dire sur la case tout en bas : j = plateau[0].length-1
             if (j == plateau[0].length-1){
-                console.log("je suis au bout du plateau");
+                // console.log("je suis au bout du plateau");
                 return true;
             }
             // Si la case en dessous est vide
             else if (this.estVide(plateau, i, j+1)){
-                console.log("la case en dessous est vide");
+                // console.log("la case en dessous est vide");
                 // Si la case en dessous est le jour
                 if (this.estQui(plateau, i, j+2, "me")){
-                    console.log("la case au dessus encore est le joueur");
+                    // console.log("la case au dessus encore est le joueur");
                     return false;
                 // Si la case en dessous est le computer ou vide
                 } else {
-                    console.log("la case au dessus encore est le joueur ou vide");
+                    // console.log("la case au dessus encore est le joueur ou vide");
                     return true;
                 }
             // Si la case au dessus n'est pas vide
             } else if (!this.estVide(plateau, i, j+1)){
-                console.log("la case en dessous n'est pas vide");
+                // console.log("la case en dessous n'est pas vide");
                 if (plateau[i][j+1].who == "computer"){
                     // tant que la case en dessous est le joueur 
                     var k = j+1;
@@ -324,13 +322,13 @@ export default class GameScreen extends Component {
                     }
                     // Si la case en dessous encore est le joueur
                     if (this.estQui(plateau, i, k+1, "me")){
-                        console.log("la case au dessus encore est le joueur");
+                        // console.log("la case au dessus encore est le joueur");
                         return false;
                     } else if (this.estQui(plateau, i, k+1, "computer")){
-                        console.log("la case au dessus encore est le computer");
+                        // console.log("la case au dessus encore est le computer");
                         return true;
                     } else {
-                        console.log("la case en dessous encore est vide");
+                        // console.log("la case en dessous encore est vide");
                         if (k == plateau[0].length-1){
                             return true;
                         } else {
@@ -343,12 +341,12 @@ export default class GameScreen extends Component {
                         }
                     }
                 } else {
-                    console.log("la case en dessous est le joueur");
+                    // console.log("la case en dessous est le joueur");
                     return false;
                 }
             // Si la case en dessous m'appartient pas
             } else if (this.estQui(plateau, i, j+1, player)){
-                console.log("la case en dessous m'appartient pas");
+                // console.log("la case en dessous m'appartient pas");
                 return false;
             // si la case en dessous m'appartient 
             } else {
@@ -356,14 +354,14 @@ export default class GameScreen extends Component {
                 if (this.estVideo(plateau, i, j+2)){
                     // la carte d'encore en dessous est au joueur
                     if (this.estQui(plateau, i, j+3, player)){
-                        console.log("la carte d'encore en dessous est au joueur");
+                        // console.log("la carte d'encore en dessous est au joueur");
                         return false;
                     } else {
-                        console.log("la carte d'encore au dessus est au computer");
+                        // console.log("la carte d'encore au dessus est au computer");
                         return true;
                     }
                 } else {
-                    console.log("la case encore en dessous n'est pas vide");
+                    // console.log("la case encore en dessous n'est pas vide");
                     return false;
                 }
             }
@@ -372,7 +370,6 @@ export default class GameScreen extends Component {
 
     estVide(plateau, i, j){
         // test si une case est vide
-        // console.log(plateau);
         if (plateau[i][j].length == 0){
             return true;
         }
@@ -391,7 +388,7 @@ export default class GameScreen extends Component {
          * @param player - the player who's turn it is - "me" or "computer"
          * @returns a boolean value.
          */
-        console.log("estQui : " + i + " " + j);
+        // console.log("estQui : " + i + " " + j);
         if (j < 0 || j > 7){
             return false;
         } else {
@@ -500,6 +497,7 @@ export default class GameScreen extends Component {
     }
 
     detectWinner(){
+        // permet de détecter si le joueur a gagné ou perdu
         if(this.state.emplacementTouche[this.state.heartEnemy-1]===true){
             // alert("Tu as gagné");
             this.setState({winner: 1});
@@ -515,16 +513,6 @@ export default class GameScreen extends Component {
         return false
     }
     
-
-    // setFalseAnimCard() {
-    //     var plateau = this.state.plateau;
-    //     for(var i = 0; i < plateau.length; i++){
-    //         for(var j = 0; j < plateau[0].length; j++){
-    //             plateau[i][j].anim = false;
-    //         }
-    //     }
-    //     // this.setState({plateau: plateau});
-    // }
 
 
     async finDuTour(){
@@ -545,8 +533,7 @@ export default class GameScreen extends Component {
 
         this.detecteEmplacementTouche();
         this.detectWinner();
-        // var nouveauplateau = this.state.plateau;
-        // nouveauplateau = this.detecteCardProche(nouveauplateau) 
+
 
         // the player can't play 2 times in a row
         this.setState({played: false});
@@ -556,8 +543,6 @@ export default class GameScreen extends Component {
         button.style.backgroundColor ="#465362";   
         button.style.backgroundColor ="#465362";
 
-        // the card don't anim anymore  
-        // this.setFalseAnimCard();
     }
     
 
@@ -566,7 +551,7 @@ render() {
     return(
 		<div className={styles.main}>        
 			<DeckAdversaire/>
-            {/* <div class="bonjour"> bonjour </div> */}
+
 
 			{this.state.winner==0 ? 
             <GameGrid value={this.state.plateau} heart={this.state.heart} cardSelected={this.state.deck[this.state.cardSelected]} fromChild={this.handleCallback} fromChildPlayed={this.handleCallbackPlayed} fromChildHeartEnemy={this.handleCallbackHeartEnemy} fromChildEmplacementTouche={this.handleCallbackEmplacementTouche} fromChildHeart={this.handleCallbackHeart} played={this.state.played} emplacementTouche={this.state.emplacementTouche}/>
@@ -576,15 +561,7 @@ render() {
             </div>
             }
             <button className={styles.button} id="buttonFinDuTour" onClick={() => {this.finDuTour()}} type="button">Fin du tour</button>
-            {/* <button className={styles.button} id="buttonJoue" onClick={() => {this.joue()}} type="button">Joue</button> */}
-
             <Deck value={this.state.deck} fromChildCard={this.handleCallback}/>
-            {/* <CardTwo/> */}
-            {/* <button onClick={() => {this.computerPlaceCard()}}>heart</button>
-            <button onClick={() => {this.AvanceColonne1()}}>avance</button>
-             */}
-            <button onClick={() => {console.log(this.estVide(this.state.plateau, 0, 5))}}>card</button>
-
 		</div>
 	)
 }

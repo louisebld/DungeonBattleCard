@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
 import styles from "../css/Carousel.module.css"
-import img1 from "../assets/png/dungeon.png"
 
 // https://www.npmjs.com/package/react-responsive-carousel
 
@@ -56,11 +55,3 @@ class DemoCarousel extends Component {
 };
 
 export default DemoCarousel;
-
-// Don't forget to include the css in your page
-
-// Using webpack or parcel with a style loader
-// import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
-
-// Using html tag:
-// 

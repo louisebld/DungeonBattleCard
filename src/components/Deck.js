@@ -1,12 +1,7 @@
 import React from 'react';
 import Card from './Card';
-import FinalGenCard from '../functions/FinalGenCard';
 import generateCard from '../functions/generateCard';
 import styles from '../css/Deck.module.css';
-import { v4 as uuidv4, v4 } from 'uuid';
-import { db } from '../firebase.js';
-import { collection, getDocs } from "firebase/firestore";
-import {useEffect, useState} from 'react'
 
 
 export default class Deck extends React.Component {
@@ -33,6 +28,7 @@ export default class Deck extends React.Component {
         this.state.deck.splice(index, 0, generateCard("me"));
     }
 
+    
     cardSelected(index){
         this.setState({cardSelected: this.state.deck[index]});
         this.sendCardSelected(index);

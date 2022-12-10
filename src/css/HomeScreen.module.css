@@ -34,6 +34,14 @@
     flex-direction: column;
 }
 
+.credits{
+    font-size: 15px;
+    color : #3a3280;
+    text-decoration: wavy;
+    text-align: center;
+    margin-top: 5rem;
+}
+
 .img_menu{
     width: 40%;
 }

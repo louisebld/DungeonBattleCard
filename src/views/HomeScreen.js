@@ -21,6 +21,10 @@ export default function HomeScreen (){
                             </button>
                         </Link>
                     </div>
+                    <div className={styles.credits}>
+                        Jeu de cartes créé par Louise BOLLARd & Tom THIERRY <br/>
+                        TP INFO701 - React - 2022
+                    </div>
                 </div>
             </div>
         )

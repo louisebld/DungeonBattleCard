@@ -275,7 +275,7 @@ export default class GameScreen extends Component {
                 if (plateau[i][j-1].who == "me"){
                     // tant que la case au dessus est le joueur 
                     var k = j-1;
-                    while (plateau[i][k].who == "me"){
+                    while (this.estQui(plateau, i, k, "me")){
                         k--;
                     }
                     // Si la case au dessus encore est le computer
@@ -351,7 +351,7 @@ export default class GameScreen extends Component {
                 if (plateau[i][j+1].who == "computer"){
                     // tant que la case en dessous est le joueur 
                     var k = j+1;
-                    while (plateau[i][k].who == "computer"){
+                    while (this.estQui(plateau, i, k, "computer")){
                         k++;
                     }
                     // Si la case en dessous encore est le joueur

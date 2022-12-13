@@ -111,17 +111,20 @@ export default class GameScreen extends Component {
         }  
         for(var i = 0; i < 4; i++)
         {
-            if (i != childData){
-                var card = document.getElementById("#card" + i);
-                card.style.height='80px';
-                card.style.width='50px';
+            if (i !== childData){
+                var lcard = document.getElementById("#card" + i);
+                lcard.style.height='80px';
+                lcard.style.width='50px';
             }
         }
     };
 
     handleCallbackPlayed = (childData) => {
         this.setState({played: childData});
-        this.state.deck[this.state.cardSelected] = this.generateCard("me");       
+        // this.state.deck[this.state.cardSelected] = this.generateCard("me");    
+        var ndeck = this.state.deck;
+        ndeck[this.state.cardSelected] = this.generateCard("me");
+        this.setState({deck: ndeck});
         var button = document.getElementById("buttonFinDuTour");
         button.style.backgroundColor ="yellow";
     }
@@ -185,9 +188,9 @@ export default class GameScreen extends Component {
         for(var i = 0; i < 3; i++){
             sleep(1000);
             for(var j = 0; j < plateau[0].length; j++){
-                if(plateau[i][j].length != 0){
+                if(!this.estVide(plateau, i, j)){
                     // ---- COMPUTER ----
-                    if (plateau[i][j].who == "computer")
+                    if (this.estQui(plateau, i, j, "computer"))
                     {       
                         if (this.detecteIfItCanMove(plateau, i, j, "computer")){
                             // le computer peut bouger
@@ -238,7 +241,7 @@ export default class GameScreen extends Component {
         // detecte si un emplacement est touché
         var nouveauplateau = this.state.plateau;
         for(var i = 0; i < 3; i++){
-            if (nouveauplateau[i][0].who == "me"){
+            if (this.estQui(nouveauplateau, i, 0, "me")){
                 var emplacementTouche = [this.state.emplacementTouche[0], this.state.emplacementTouche[1], this.state.emplacementTouche[2]];
                 emplacementTouche[i] = true;
                 this.setState({emplacementTouche : emplacementTouche});
@@ -250,10 +253,10 @@ export default class GameScreen extends Component {
         // Regarde si une carte peut bouger
         // console.log(" " + i + " " + j);
         // console.log(plateau[i][j].who);
-        if (player == "me"){
+        if (player === "me"){
             // console.log("passe in player" + player)
             // Si je suis au bout du plateau c'est à dire sur la case tout en haut : j=0
-            if (j == 0){
+            if (j === 0){
                 // console.log("je suis au bout du plateau");
                 return true;
             }
@@ -272,7 +275,7 @@ export default class GameScreen extends Component {
             // Si la case au dessus n'est pas vide
             } else if (!this.estVide(plateau, i, j-1)){
                 // console.log("la case au dessus n'est pas vide");
-                if (plateau[i][j-1].who == "me"){
+                if (this.estQui(plateau, i, j-1, "me")){
                     // tant que la case au dessus est le joueur 
                     var k = j-1;
                     while (this.estQui(plateau, i, k, "me")){
@@ -287,7 +290,7 @@ export default class GameScreen extends Component {
                         return true;
                     } else {
                         // console.log("la case au dessus encore est vide");
-                        if (k == 0){
+                        if (k === 0){
                             return true;
                         } else {
                             if (this.estQui(plateau, i, k-1, "computer")){
@@ -303,7 +306,7 @@ export default class GameScreen extends Component {
                     return false;
                 }
             // Si la case au dessus m'appartient pas
-            } else if (this.estQui(plateau, i, j-1), player){
+            } else if (this.estQui(plateau, i, j-1, player)){
                 // console.log("la case au dessus m'appartient pas");
                 return false;
             // si la case au dessus m'appartient 
@@ -329,7 +332,7 @@ export default class GameScreen extends Component {
             console.log("taille : ", plateau[0].length-1)
             console.log("le j : ", j)
 
-            if (j == plateau[0].length-1){
+            if (j === plateau[0].length-1){
                 // console.log("je suis au bout du plateau");
                 return true;
             }
@@ -348,25 +351,26 @@ export default class GameScreen extends Component {
             // Si la case au dessous n'est pas vide
             } else if (!this.estVide(plateau, i, j+1)){
                 // console.log("la case en dessous n'est pas vide");
-                if (plateau[i][j+1].who == "computer"){
+                // plateau[i][j+1].who == "computer"
+                if (this.estQui(plateau, i, j+1, "computer")){
                     // tant que la case en dessous est le joueur 
-                    var k = j+1;
-                    while (this.estQui(plateau, i, k, "computer")){
-                        k++;
+                    var p = j+1;
+                    while (this.estQui(plateau, i, p, "computer")){
+                        p++;
                     }
                     // Si la case en dessous encore est le joueur
-                    if (this.estQui(plateau, i, k+1, "me")){
+                    if (this.estQui(plateau, i, p+1, "me")){
                         // console.log("la case au dessus encore est le joueur");
                         return false;
-                    } else if (this.estQui(plateau, i, k+1, "computer")){
+                    } else if (this.estQui(plateau, i, p+1, "computer")){
                         // console.log("la case au dessus encore est le computer");
                         return true;
                     } else {
                         // console.log("la case en dessous encore est vide");
-                        if (k == plateau[0].length-1){
+                        if (p === plateau[0].length-1){
                             return true;
                         } else {
-                            if (this.estQui(plateau, i, k+1, "me")){
+                            if (this.estQui(plateau, i, p+1, "me")){
                                 return false;
                             }
                             else {
@@ -405,7 +409,7 @@ export default class GameScreen extends Component {
 
     estVide(plateau, i, j){
         // test si une case est vide
-        if (plateau[i][j].length == 0){
+        if (plateau[i][j].length === 0){
             return true;
         }
         else {
@@ -428,7 +432,7 @@ export default class GameScreen extends Component {
             return false;
         } else {
             console.log("estQui : " + i + " " + j);
-            if (plateau[i][j].who == player){
+            if (plateau[i][j].who === player){
                 return true;
             }
             return false;
@@ -493,8 +497,9 @@ export default class GameScreen extends Component {
          */
         for(var i = 0; i < 3; i++){
             for(var j = 0; j < plateau[0].length - 1; j++){
-                    if(plateau[i][j].length != 0 && plateau[i][j+1].length != 0){
-                        if (plateau[i][j].who != plateau[i][j+1].who){
+                    // if(plateau[i][j].length != 0 && plateau[i][j+1].length != 0){
+                    if (!this.estVide(plateau, i, j) && !this.estVide(plateau, i, j+1)){
+                        if (plateau[i][j].who !== plateau[i][j+1].who){
                             plateau = this.fightCard(plateau, i, j, i, j+1);
                             plateau[i][j].anim = true;
                             plateau[i][j+1].anim = true;
@@ -523,8 +528,9 @@ export default class GameScreen extends Component {
         for(var i = 0; i < 3; i++){
             for(var j = 0; j < plateau[0].length - 2; j++){
                 // check if there's no card in the middle, if so, fight
-                if(plateau[i][j].length != 0 && plateau[i][j+2].length != 0 && plateau[i][j+1].length == 0){
-                    if (plateau[i][j].who != plateau[i][j+2].who){
+                // if(plateau[i][j].length != 0 && plateau[i][j+2].length != 0 && plateau[i][j+1].length == 0){
+                if (!this.estVide(plateau, i, j) && !this.estVide(plateau, i, j+2) && this.estVide(plateau, i, j+1)){
+                    if (plateau[i][j].who !== plateau[i][j+2].who){
                         plateau = this.fightCard(plateau, i, j, i, j+2);
                         this.setState({plateau : plateau});
                     }
@@ -590,7 +596,7 @@ render() {
 			<DeckAdversaire/>
 
 
-			{this.state.winner==0 ? 
+			{this.state.winner===0 ? 
             <GameGrid value={this.state.plateau} heart={this.state.heart} cardSelected={this.state.deck[this.state.cardSelected]} fromChild={this.handleCallback} fromChildPlayed={this.handleCallbackPlayed} fromChildHeartEnemy={this.handleCallbackHeartEnemy} fromChildEmplacementTouche={this.handleCallbackEmplacementTouche} fromChildHeart={this.handleCallbackHeart} played={this.state.played} emplacementTouche={this.state.emplacementTouche}/>
             :
             <div className={styles.winner}>

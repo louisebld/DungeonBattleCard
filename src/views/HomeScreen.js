@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {Link} from "react-router-dom";
 import styles from '../css/HomeScreen.module.css';
 import logo from '../assets/png/dungeon.png';

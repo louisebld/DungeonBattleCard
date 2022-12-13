@@ -192,10 +192,17 @@ export default class GameScreen extends Component {
                         if (this.detecteIfItCanMove(plateau, i, j, "computer")){
                             // le computer peut bouger
                             // console.log(plateau[i][j].name + ": computer can move");
-                            nouveauplateau[i][j+1] = plateau[i][j];
-                            if (this.estVide(nouveauplateau, i, j)){
-                                nouveauplateau[i][j] = [];
-                            } 
+                            if(j < plateau[0].length-1){
+
+                                nouveauplateau[i][j+1] = plateau[i][j];
+                                if (this.estVide(nouveauplateau, i, j)){
+                                    nouveauplateau[i][j] = [];
+                                } 
+
+                            } else {
+                                console.log("cest la fin")
+                                // nouveauplateau[i][j] = []
+                            }
                         }
                         else {
                             // le computer ne peut pas bouger
@@ -319,6 +326,9 @@ export default class GameScreen extends Component {
         } else {
             // console.log("passe in player" + player)
             // Si je suis au bout du plateau c'est à dire sur la case tout en bas : j = plateau[0].length-1
+            console.log("taille : ", plateau[0].length-1)
+            console.log("le j : ", j)
+
             if (j == plateau[0].length-1){
                 // console.log("je suis au bout du plateau");
                 return true;
@@ -414,9 +424,10 @@ export default class GameScreen extends Component {
          * @returns a boolean value.
          */
         // console.log("estQui : " + i + " " + j);
-        if (j < 0 || j > 7){
+        if (j < 0 || j >= 6){
             return false;
         } else {
+            console.log("estQui : " + i + " " + j);
             if (plateau[i][j].who == player){
                 return true;
             }
@@ -482,20 +493,21 @@ export default class GameScreen extends Component {
          */
         for(var i = 0; i < 3; i++){
             for(var j = 0; j < plateau[0].length - 1; j++){
-                if(plateau[i][j].length != 0 && plateau[i][j+1].length != 0){
-                    if (plateau[i][j].who != plateau[i][j+1].who){
-                        plateau = this.fightCard(plateau, i, j, i, j+1);
-                        plateau[i][j].anim = true;
-                        plateau[i][j+1].anim = true;
-                        console.log(plateau);
-                        console.log(document.querySelector("#card_"+i+"_"+j));
-                        this.setState({plateau : plateau});
-                        await sleep(500);
-                        plateau[i][j].anim = false;
-                        plateau[i][j+1].anim = false;
-                        this.setState({plateau : plateau});
+                    if(plateau[i][j].length != 0 && plateau[i][j+1].length != 0){
+                        if (plateau[i][j].who != plateau[i][j+1].who){
+                            plateau = this.fightCard(plateau, i, j, i, j+1);
+                            plateau[i][j].anim = true;
+                            plateau[i][j+1].anim = true;
+                            console.log(plateau);
+                            console.log(document.querySelector("#card_"+i+"_"+j));
+                            this.setState({plateau : plateau});
+                            await sleep(500);
+                            plateau[i][j].anim = false;
+                            plateau[i][j+1].anim = false;
+                            this.setState({plateau : plateau});
+                        }
                     }
-                }
+                
             }
         }
     }

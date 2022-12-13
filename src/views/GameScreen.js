@@ -548,7 +548,7 @@ export default class GameScreen extends Component {
         }
 
         var card = this.state.plateau[this.state.heart-1][this.state.plateau[0].length-1];
-        if(card.length != 0 && card.who == "computer"){
+        if(card.length !== 0 && card.who === "computer"){
             // alert("L'ordinateur a gagné")
             this.setState({winner: 2});
             return true;

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 import HomeScreen from './views/HomeScreen';
 import GameScreen from './views/GameScreen';
 import Rules from './views/Rules';

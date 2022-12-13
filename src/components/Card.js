@@ -33,7 +33,7 @@ export default class Card extends React.Component {
     }
     render() {
 
-        if(this.props.who =="me"){
+        if(this.props.who === "me"){
             return (
                 <div id={"#card" + this.props.index} className={styles.card} onClick={() => this.handleClick(this.props)}>
                     <div className={styles.infos_card}>

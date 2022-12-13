@@ -153,7 +153,7 @@ export default class GameScreen extends Component {
     computerPlaceCard(){
         var card = this.generateCard("computer");
         // console.log(card);
-        var index = Math.floor(Math.random() * 3);
+        var index = Math.floor(Math.random() * 1);
         var plateau = this.state.plateau;
         plateau[index][0] = card;
         this.setState({plateau: plateau});
@@ -173,8 +173,9 @@ export default class GameScreen extends Component {
                             // le computer peut bouger
                             // console.log(plateau[i][j].name + ": computer can move");
                             nouveauplateau[i][j+1] = plateau[i][j];
-                            nouveauplateau[i][j] = [];
-                            
+                            if (this.estVide(nouveauplateau, i, j)){
+                                nouveauplateau[i][j] = [];
+                            } 
                         }
                         else {
                             // le computer ne peut pas bouger
@@ -197,6 +198,7 @@ export default class GameScreen extends Component {
                     }
                 }
             }
+            sleep(200)
         }
 
         this.setState({plateau: nouveauplateau});
@@ -311,7 +313,7 @@ export default class GameScreen extends Component {
                     // console.log("la case au dessus encore est le joueur ou vide");
                     return true;
                 }
-            // Si la case au dessus n'est pas vide
+            // Si la case au dessous n'est pas vide
             } else if (!this.estVide(plateau, i, j+1)){
                 // console.log("la case en dessous n'est pas vide");
                 if (plateau[i][j+1].who == "computer"){
@@ -336,6 +338,7 @@ export default class GameScreen extends Component {
                                 return false;
                             }
                             else {
+                                // console.log("iciii");
                                 return true;
                             }
                         }
@@ -465,7 +468,7 @@ export default class GameScreen extends Component {
                         console.log(plateau);
                         console.log(document.querySelector("#card_"+i+"_"+j));
                         this.setState({plateau : plateau});
-                        await sleep(1000);
+                        await sleep(500);
                         plateau[i][j].anim = false;
                         plateau[i][j+1].anim = false;
                         this.setState({plateau : plateau});
@@ -518,9 +521,9 @@ export default class GameScreen extends Component {
     async finDuTour(){
         if (this.state.played == true){
             this.computerPlaceCard();
-            await sleep(1000);
+            await sleep(500);
             this.AvanceColonne1();
-            await sleep(1000);
+            await sleep(500);
             this.joue();
         }
 

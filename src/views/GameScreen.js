@@ -153,10 +153,29 @@ export default class GameScreen extends Component {
     computerPlaceCard(){
         var card = this.generateCard("computer");
         // console.log(card);
-        var index = Math.floor(Math.random() * 1);
+        var index = Math.floor(Math.random() * 3);
         var plateau = this.state.plateau;
+        console.log(plateau[index][0])
+        if (!this.lignePleine()){
+        while (!this.estVide(plateau, index, 0)){
+            console.log("bjur")
+            console.log(index)
+            index = Math.floor(Math.random() * 3);
+            
+        }
         plateau[index][0] = card;
         this.setState({plateau: plateau});
+        }
+    }
+
+    lignePleine(){
+        var plateau = this.state.plateau;
+        for(var i = 0; i < 3; i++){
+            if (this.estVide(plateau, i, 0)){
+                return false;
+            }
+        }
+        return true;
     }
 
     async AvanceColonne1(){
@@ -164,6 +183,7 @@ export default class GameScreen extends Component {
         var plateau = this.state.plateau;
         var nouveauplateau = createEmptyPlateau();
         for(var i = 0; i < 3; i++){
+            sleep(1000);
             for(var j = 0; j < plateau[0].length; j++){
                 if(plateau[i][j].length != 0){
                     // ---- COMPUTER ----
@@ -196,6 +216,8 @@ export default class GameScreen extends Component {
                             nouveauplateau[i][j] = plateau[i][j];
                         }
                     }
+                    // this.setState({plateau: nouveauplateau});
+                    // sleep(10000)
                 }
             }
             sleep(200)
@@ -519,13 +541,13 @@ export default class GameScreen extends Component {
 
 
     async finDuTour(){
-        if (this.state.played == true){
+        // /if (this.state.played == true){
             this.computerPlaceCard();
             await sleep(500);
             this.AvanceColonne1();
             await sleep(500);
             this.joue();
-        }
+        // }
 
     }
 

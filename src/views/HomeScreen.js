@@ -22,7 +22,7 @@ export default function HomeScreen (){
                         </Link>
                     </div>
                     <div className={styles.credits}>
-                        Jeu de cartes créé par Louise BOLLARd & Tom THIERRY <br/>
+                        Jeu de cartes créé par Louise BOLLARD & Tom THIERRY <br/>
                         TP INFO701 - React - 2022
                     </div>
                 </div>

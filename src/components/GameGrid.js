@@ -44,7 +44,11 @@ export default class GameGridV2 extends React.Component {
     
     ButtonEnemyHeart(nb){
         if(this.props.emplacementTouche[nb-1] == true){
-            return <button id={"enemy_" + nb} className={styles.button_heart}>✖️</button>
+            if (this.state.heartEnemy == nb){
+                return <button id={"enemy_" + nb} className={styles.button_heart}>💟</button>
+            } else {
+                return <button id={"enemy_" + nb} className={styles.button_heart}>✖️</button>
+            }
         }
         else {
             return <button id={"enemy_" + nb} className={styles.button_heart}>❔</button>

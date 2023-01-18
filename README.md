@@ -5,8 +5,7 @@
 J’en profite pour vous annoncer que lors du rendu: une démo est attendue (je peux mettre une borne wifi "non saturée » pour la démo).
 
 En termes de rendu, il faudra:
-un petit compte-rendu: - expliquant l’appli (but du jeu + deroulement )✅ - les fonctionnalités, - les choix (techno ✅ (pk react / implementation), - l’architecture ✅ - les problèmes rencontrés (organisation, recuperation des donnees
-, et ce con de Avance1 )✅ - les améliorations/évolutions possibles. ✅ - Il faudra aussi me fournir un mode d’installation ✅
+un petit compte-rendu: - expliquant l’appli (but du jeu + deroulement )✅ - les fonctionnalités, - les choix (techno ✅ (pk react / implementation), - l’architecture ✅ - les problèmes rencontrés (organisation, recuperation des donnees)✅ - les améliorations/évolutions possibles. ✅ - Il faudra aussi me fournir un mode d’installation ✅
 
      - Le code commenté sera fourni dans un zip ou un lien git. Si un « exécutable » existe (une version compilée, un .apk), il est important de le fournir également (sans oublier le source).
 
